@@ -1,0 +1,193 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to content" [ref=e3] [cursor=pointer]:
+      - /url: "#content"
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Manuals+ user manuals and guides" [ref=e6]
+        - generic [ref=e7]:
+          - link "Manuals+" [ref=e9] [cursor=pointer]:
+            - /url: https://manuals.plus/
+          - text: User Manuals Simplified.
+      - navigation "Primary navigation" [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "Q & A" [ref=e13] [cursor=pointer]:
+              - /url: https://manuals.plus/qa/
+          - listitem [ref=e14]:
+            - link "Deep Search" [ref=e15] [cursor=pointer]:
+              - /url: https://manuals.plus/deep-search
+          - listitem [ref=e16]:
+            - link "Upload" [ref=e17] [cursor=pointer]:
+              - /url: https://manuals.plus/upload
+          - listitem [ref=e18]:
+            - search [ref=e19]:
+              - generic [ref=e20]: "Search for:"
+              - searchbox "Search for:" [ref=e21]
+              - button "Search Manuals+" [ref=e22] [cursor=pointer]: 🔍
+    - main [ref=e24]:
+      - generic [ref=e26]:
+        - generic "Breadcrumbs" [ref=e27]:
+          - link "Home" [ref=e28] [cursor=pointer]:
+            - /url: https://manuals.plus
+          - generic [ref=e29]: ›
+          - link "Ziqqucu" [ref=e30] [cursor=pointer]:
+            - /url: https://manuals.plus/category/ziqqucu
+          - generic [ref=e31]: ›
+          - generic [ref=e32]: YS-DZ-3.1 Universal LED Backlight Driver Board for LCD TVs - Specifications & Wiring
+          - link "PDF" [ref=e33] [cursor=pointer]:
+            - /url: https://manuals.plus/m/ea229d698fdeffe158d0a85e381d657d02714a870a560b968559953ab521d745.pdf
+            - img "PDF" [ref=e34]
+        - note [ref=e35]:
+          - strong [ref=e36]: "ℹ️ Document Conversion Notice:"
+          - text: This page was converted from the original file for easier reading. Diagrams/images may appear only in the original PDF below.
+        - img "Document preview" [ref=e37] [cursor=pointer]
+        - generic [ref=e38]: "File info: application/pdf · 7 pages · 564.22KB"
+        - article [ref=e40]:
+          - heading "YS-DZ-3.1 Universal LED Backlight Driver Board" [level=1] [ref=e42]
+          - generic [ref=e43]:
+            - heading "Features" [level=2] [ref=e44]
+            - list [ref=e45]:
+              - listitem [ref=e46]: Designed with a wide voltage input and output method.
+              - listitem [ref=e47]: Output voltage automatically adjusts to the required voltage of the light strip.
+              - listitem [ref=e48]: Input voltage determined by two wiring methods.
+              - listitem [ref=e49]: Includes input and output connecting wires.
+              - listitem [ref=e50]: Compact size with high power output.
+              - listitem [ref=e51]: Suitable for 14-inch to 65-inch LED LCD TV universal backlight boards.
+          - generic [ref=e52]:
+            - heading "Specifications" [level=2] [ref=e53]
+            - paragraph [ref=e54]:
+              - strong [ref=e55]: "Model:"
+              - text: YS-DZ-3.1
+            - paragraph [ref=e56]:
+              - strong [ref=e57]: "Input Voltage:"
+              - text: 12-200V
+            - paragraph [ref=e58]:
+              - strong [ref=e59]: "Output Voltage:"
+              - text: Automatically adjustable between 24-400V
+            - paragraph [ref=e60]:
+              - strong [ref=e61]: "Output Current:"
+              - text: 300mA
+            - paragraph [ref=e62]:
+              - strong [ref=e63]: "Dimensions:"
+              - text: 72mm x 44mm (2.83in x 1.73in)
+          - generic [ref=e64]:
+            - heading "Wiring Instructions" [level=2] [ref=e65]
+            - paragraph [ref=e66]: "This driver board uses a wide voltage input and output method, automatically adjusting the output voltage to match the connected lamp strip. The input voltage can be configured via two wiring methods:"
+            - heading "Method 1:" [level=3] [ref=e67]
+            - list [ref=e68]:
+              - listitem [ref=e69]: Connect the Red and Yellow wires together to a 12V power source.
+              - listitem [ref=e70]: Connect the Blue wire to the switch signal (BLON). If the board is integrated, this signal is usually found on the back. If BLON is not available, it can be connected to a 5V USB source.
+              - listitem [ref=e71]: Connect the Black wire to Ground (GND).
+            - heading "Method 2:" [level=3] [ref=e72]
+            - list [ref=e73]:
+              - listitem [ref=e74]: Connect the Red wire to the motherboard output between 12V and 200V.
+              - listitem [ref=e75]: Connect the Yellow wire to a 12V source.
+              - listitem [ref=e76]: Connect the Blue wire to the power on/off signal (BLON).
+              - listitem [ref=e77]: Connect the Black wire to Ground (GND).
+            - heading "Important Attention Points:" [level=3] [ref=e78]
+            - list [ref=e79]:
+              - listitem [ref=e80]: If the input voltage is 12V, the light strip voltage should not exceed 100V.
+              - listitem [ref=e81]: If the input voltage is 24V, the light strip voltage should not exceed 200V.
+              - listitem [ref=e82]: Avoid operating the board under overload conditions to ensure durability.
+            - paragraph [ref=e83]: The output voltage automatically adjusts to match the light strip's requirement. Connect the positive red wire from the board to the positive output of the lamp strip, and the negative output (black wire) to the negative pole of the light strip.
+            - paragraph [ref=e84]: If multiple sets of light strips are connected, ensure all connections are correct before powering on.
+            - heading "Brightness Adjustment:" [level=3] [ref=e85]
+            - paragraph [ref=e86]: If the image appears dim after powering on, brightness can be adjusted using the pads labeled J1/J2/J3/J4/J5 on the booster board. Shortening the welding points of J1 increases brightness. Short-circuiting J2 increases it further, and so on. Adjust to the desired level.
+          - generic [ref=e87]:
+            - heading "Package Contents" [level=2] [ref=e88]
+            - list [ref=e89]:
+              - listitem [ref=e90]: 1 x Drive Board
+              - listitem [ref=e91]: 2 x Cables
+          - generic [ref=e92]:
+            - heading "Visual Description of the Board" [level=2] [ref=e93]
+            - paragraph [ref=e94]: The YS-DZ-3.1 is a compact printed circuit board (PCB) designed for LED LCD TV backlighting. It features a large toroidal transformer, two electrolytic capacitors (labeled 'hongx', 'VEHT', 'LOWESR', '-40+105°C'), a main integrated circuit (IC) labeled 'K3625', and several smaller components like resistors, diodes, and transistors.
+            - paragraph [ref=e95]: "On the board, there are input connectors labeled 'CON1_1' and 'CON3_1', and output connectors for the LED strips. Key labels on the board include:"
+            - list [ref=e96]:
+              - listitem [ref=e97]: "Model Number: YS-DZ-3.1"
+              - listitem [ref=e98]: "Input Power (供电): UCC: 12V-200V (Red line), VIN: 12-24V (Yellow line), ON/OFF: 2.5-5V (Blue line), Ground (接地): Black line."
+              - listitem [ref=e99]: "Output Voltage (输出 VOUT): 12V-400V (Note: Board labels show variations like '120-400U' or '120-4000' via OCR, and Chinese text indicates '12V-400U'. The main text description specifies 24-400V)."
+              - listitem [ref=e100]: "Output Current (IOUT): 300mA."
+              - listitem [ref=e101]: "Brightness adjustment pads: MARK, J1, J2, J3, J4, J5."
+            - paragraph [ref=e102]: Connection points are clearly marked for input power (DC 12V-200V, DC 12V-24V, GND, BLON ON/OFF 5V) and output to the LED board.
+        - generic [ref=e103]:
+          - heading "Full PDF Document" [level=2] [ref=e104]
+          - generic "Document viewer" [ref=e105]:
+            - generic [ref=e107]:
+              - generic [ref=e108]:
+                - generic [ref=e109]: Loading PDF...
+                - generic [ref=e110]:
+                  - button "Zoom out" [ref=e111] [cursor=pointer]: −
+                  - button "Zoom in" [ref=e112] [cursor=pointer]: +
+                  - button "Fit width" [ref=e113] [cursor=pointer]
+                  - button "100%" [ref=e114] [cursor=pointer]
+                  - button "View Fullscreen" [ref=e115] [cursor=pointer]
+                  - link "Download PDF" [ref=e116] [cursor=pointer]:
+                    - /url: https://manuals.plus/m/ea229d698fdeffe158d0a85e381d657d02714a870a560b968559953ab521d745.pdf
+                  - button "Print PDF" [ref=e117] [cursor=pointer]
+              - generic [ref=e118]:
+                - generic [ref=e122]: Loading PDF...
+                - generic "YS-DZ-3.1 Universal LED Backlight Driver Board for LCD TVs - Specifications & Wiring" [ref=e123]
+          - paragraph [ref=e124]:
+            - text: If the inline viewer fails, it will open the original document in compatibility mode automatically. You can also
+            - link "open the file directly" [ref=e125] [cursor=pointer]:
+              - /url: https://manuals.plus/m/ea229d698fdeffe158d0a85e381d657d02714a870a560b968559953ab521d745.pdf
+            - text: .
+        - generic [ref=e126]:
+          - heading "Ask a question about this manual" [level=2] [ref=e127]
+          - paragraph [ref=e128]: Ask about setup, troubleshooting, compatibility, parts, safety, or missing instructions. Manuals+ will review the question and use this page’s manual context to help answer it.
+          - generic [ref=e129]:
+            - generic [ref=e131]:
+              - generic [ref=e132]: Name
+              - textbox "Name" [ref=e133]:
+                - /placeholder: Anonymous
+              - generic [ref=e134]: Email
+              - textbox "Email" [ref=e135]:
+                - /placeholder: you@example.com
+            - generic [ref=e136]: Question
+            - textbox "Question" [ref=e137]:
+              - /placeholder: "Example: How do I reset this device or fix this error?"
+            - generic [ref=e138]: Details
+            - textbox "Details" [ref=e139]:
+              - /placeholder: Model number, symptoms, what you tried, or the section of the manual you are using.
+            - button "Submit question" [ref=e140] [cursor=pointer]
+    - contentinfo [ref=e141]:
+      - generic [ref=e143]:
+        - generic [ref=e144]:
+          - generic [ref=e145]: "Search:"
+          - textbox "Search:" [ref=e146]:
+            - /placeholder: e.g. whirlpool wrf535swhz
+          - button "Search" [ref=e147] [cursor=pointer]
+        - generic [ref=e148]:
+          - link "Manuals+" [ref=e149] [cursor=pointer]:
+            - /url: https://manuals.plus/
+          - text: "|"
+          - link "Upload" [ref=e150] [cursor=pointer]:
+            - /url: https://manuals.plus/upload
+          - text: "|"
+          - link "Deep Search" [ref=e151] [cursor=pointer]:
+            - /url: https://manuals.plus/deep-search
+          - text: "|"
+          - link "About Us" [ref=e152] [cursor=pointer]:
+            - /url: https://manuals.plus/about-us
+          - text: "|"
+          - link "Privacy Policy" [ref=e153] [cursor=pointer]:
+            - /url: https://manuals.plus/privacy-policy
+          - text: "|"
+          - link "@manuals.plus" [ref=e154] [cursor=pointer]:
+            - /url: https://x.com/manualsplus
+          - text: "|"
+          - link "YouTube" [ref=e155] [cursor=pointer]:
+            - /url: https://www.youtube.com/@manualsplus
+          - text: "|"
+          - link "LinkedIn" [ref=e156] [cursor=pointer]:
+            - /url: https://linkedin.com/company/manualsplus/
+          - text: "|"
+          - link "FaceBook" [ref=e157] [cursor=pointer]:
+            - /url: https://www.facebook.com/people/Manualsplus/61584279505669/
+          - paragraph [ref=e158]: This website is an independent publication and is neither affiliated with nor endorsed by any of the trademark owners. The "Bluetooth®" word mark and logos are registered trademarks owned by Bluetooth SIG, Inc. The "Wi-Fi®" word mark and logos are registered trademarks owned by the Wi-Fi Alliance. Any use of these marks on this website does not imply any affiliation with or endorsement.
+  - generic [ref=e160]:
+    - heading "Privacy Preferences" [level=2] [ref=e161]
+    - paragraph [ref=e162]: We and our partners share information on your use of this website to help improve your experience. For more information, or to opt out click the Do Not Sell My Information button below.
+    - button "Consent" [ref=e163]
+    - button "Do Not Sell My Information" [ref=e164]

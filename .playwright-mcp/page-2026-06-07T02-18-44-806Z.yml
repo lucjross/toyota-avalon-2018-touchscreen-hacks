@@ -1,0 +1,482 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - link "Skip to main content" [ref=e2] [cursor=pointer]
+      - link "Accessibility help" [ref=e3] [cursor=pointer]:
+        - /url: https://support.google.com/websearch/answer/181196?hl=en
+  - generic [ref=e8]:
+    - search [ref=e9]:
+      - generic [ref=e12]:
+        - link "Go to Google home" [ref=e13] [cursor=pointer]:
+          - /url: https://www.google.com/webhp?hl=en&ictx=0&sa=X&ved=0ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQpYkNCAo
+          - img "Go to Google home" [ref=e14]
+        - generic [ref=e19]:
+          - combobox "Search" [ref=e22]: LED backlight boost converter power on sequence 12V enable BLON order LED backlight boost converter power on sequence 12V enable BLON order
+          - generic [ref=e23]:
+            - button "Clear" [ref=e25] [cursor=pointer]:
+              - img [ref=e27]
+            - generic [ref=e30]:
+              - button "Search by voice" [ref=e31] [cursor=pointer]:
+                - img [ref=e32]
+              - button "Search by image" [ref=e34] [cursor=pointer]:
+                - img [ref=e35]
+        - button "Search" [ref=e37] [cursor=pointer]:
+          - img [ref=e40]
+    - generic [ref=e42]:
+      - button "Settings" [ref=e44] [cursor=pointer]:
+        - img [ref=e47]
+      - generic [ref=e50]:
+        - button "Google apps" [ref=e52] [cursor=pointer]:
+          - img [ref=e53]
+        - link "Sign in" [ref=e57] [cursor=pointer]:
+          - /url: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3DLED%2Bbacklight%2Bboost%2Bconverter%2Bpower%2Bon%2Bsequence%2B12V%2Benable%2BBLON%2Border%26sei%3DBNUkarbtDsy5mtkPu-XXuQY&ec=futura_srp_og_si_72236_p
+  - generic [ref=e59]:
+    - navigation [ref=e65]:
+      - generic [ref=e71]:
+        - list [ref=e72]:
+          - listitem [ref=e73]:
+            - link "AI Mode" [ref=e76] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&udm=50&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKp9lEhFAN_4ain3HSNQWw-mMGVXS0bCMe2eDZOQ2MOTwmdSduEdP1lcK-3UDyorIbYkF4w9ksckliRqNmnEiwdZkiZV9NcXxKOp-7aNRUpOqYesNBsPWoZXg26gxRP7xj4QOebrV446Rq_3ZjT9k4qPmJ32rN2LtrBH5IPfRmLfzuNONLzGl5pUshl1-Q25s86R7Y-Vw&aep=1&ntc=1&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ2J8OegQIDRAD
+              - generic [ref=e79]: AI Mode
+          - listitem [ref=e80]:
+            - link "All" [disabled] [ref=e81]:
+              - generic [ref=e83]: All
+          - listitem [ref=e84]:
+            - link "Shopping" [ref=e85] [cursor=pointer]:
+              - /url: /search?sca_esv=6b444b0aa3e3f3f7&udm=28&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKp9lEhFAN_4ain3HSNQWw-mMGVXS0bCMe2eDZOQ2MOTwmdSduEdP1lcK-3UDyorIbYkF4w9ksckliRqNmnEiwdZkiZV9NcXxKOp-7aNRUpOqYesNBsPWoZXg26gxRP7xj4QOebrV446Rq_3ZjT9k4qPmJ32rN2LtrBH5IPfRmLfzuNONLzGl5pUshl1-Q25s86R7Y-Vw&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&ved=1t:220175&ictx=111
+              - generic [ref=e87]: Shopping
+          - listitem [ref=e88]:
+            - link "Images" [ref=e89] [cursor=pointer]:
+              - /url: /search?sca_esv=6b444b0aa3e3f3f7&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKp9lEhFAN_4ain3HSNQWw-mMGVXS0bCMe2eDZOQ2MOTwmdSduEdP1lcK-3UDyorIbYkF4w9ksckliRqNmnEiwdZkiZV9NcXxKOp-7aNRUpOqYesNBsPWoZXg26gxRP7xj4QOebrV446Rq_3ZjT9k4qPmJ32rN2LtrBH5IPfRmLfzuNONLzGl5pUshl1-Q25s86R7Y-Vw&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQtKgLegQIFBAB
+              - generic [ref=e91]: Images
+          - listitem [ref=e92]:
+            - link "Videos" [ref=e93] [cursor=pointer]:
+              - /url: /search?sca_esv=6b444b0aa3e3f3f7&udm=7&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKp9lEhFAN_4ain3HSNQWw-mMGVXS0bCMe2eDZOQ2MOTwmdSduEdP1lcK-3UDyorIbYkF4w9ksckliRqNmnEiwdZkiZV9NcXxKOp-7aNRUpOqYesNBsPWoZXg26gxRP7xj4QOebrV446Rq_3ZjT9k4qPmJ32rN2LtrBH5IPfRmLfzuNONLzGl5pUshl1-Q25s86R7Y-Vw&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQtKgLegQIFRAB
+              - generic [ref=e95]: Videos
+          - listitem [ref=e96]:
+            - link "Short videos" [ref=e97] [cursor=pointer]:
+              - /url: /search?sca_esv=6b444b0aa3e3f3f7&udm=39&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKp9lEhFAN_4ain3HSNQWw-mMGVXS0bCMe2eDZOQ2MOTwmdSduEdP1lcK-3UDyorIbYkF4w9ksckliRqNmnEiwdZkiZV9NcXxKOp-7aNRUpOqYesNBsPWoZXg26gxRP7xj4QOebrV446Rq_3ZjT9k4qPmJ32rN2LtrBH5IPfRmLfzuNONLzGl5pUshl1-Q25s86R7Y-Vw&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQs6gLegQIExAB
+              - generic [ref=e99]: Short videos
+          - listitem [ref=e100]:
+            - link "Forums" [ref=e101] [cursor=pointer]:
+              - /url: /search?sca_esv=6b444b0aa3e3f3f7&udm=18&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKp9lEhFAN_4ain3HSNQWw-mMGVXS0bCMe2eDZOQ2MOTwmdSduEdP1lcK-3UDyorIbYkF4w9ksckliRqNmnEiwdZkiZV9NcXxKOp-7aNRUpOqYesNBsPWoZXg26gxRP7xj4QOebrV446Rq_3ZjT9k4qPmJ32rN2LtrBH5IPfRmLfzuNONLzGl5pUshl1-Q25s86R7Y-Vw&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQs6gLegQIFhAB
+              - generic [ref=e103]: Forums
+          - listitem [ref=e104]:
+            - button "More filters" [ref=e105] [cursor=pointer]:
+              - generic "More filters" [ref=e106]:
+                - generic [ref=e107]:
+                  - generic [ref=e108]: More
+                  - img [ref=e110]
+        - button "Tools" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]:
+            - generic [ref=e116]: Tools
+            - img [ref=e118]
+    - heading "Search Results" [level=1] [ref=e120]
+    - generic [ref=e125]:
+      - generic [ref=e144]:
+        - heading "Thinking Searching Thinking a little longer" [level=2] [ref=e148]:
+          - generic [ref=e149]:
+            - generic [ref=e151]: Thinking
+            - generic [ref=e153]: Searching
+            - generic [ref=e163]: Thinking a little longer
+        - progressbar [ref=e165]
+      - main [ref=e207]:
+        - generic [ref=e211]:
+          - generic [ref=e214]:
+            - heading "Web results" [level=2] [ref=e215]
+            - generic [ref=e216]:
+              - generic [ref=e219]:
+                - 'link "Powering LED backlights from 12v : r/AskElectronics Reddit · r/AskElectronics 10+ comments · 3 years ago" [ref=e221] [cursor=pointer]':
+                  - /url: https://www.reddit.com/r/AskElectronics/comments/zz61tj/powering_led_backlights_from_12v/
+                  - 'heading "Powering LED backlights from 12v : r/AskElectronics" [level=3] [ref=e222]'
+                  - generic [ref=e227]:
+                    - generic [ref=e229]: Reddit · r/AskElectronics
+                    - generic [ref=e231]: 10+ comments · 3 years ago
+                - button "About this result" [ref=e232] [cursor=pointer]:
+                  - img [ref=e235]
+              - generic [ref=e238]:
+                - generic [ref=e239]:
+                  - text: I'm incorporating a 3.5" 4D LCD into a product externally powered by
+                  - emphasis [ref=e240]: 12v
+                  - text: . Internally there are 6
+                  - emphasis [ref=e241]: LED's
+                  - text: ", each with a forward"
+                  - emphasis [ref=e242]: voltage
+                  - text: of 3.2V and 22 mA draw.
+                - link "Read more" [ref=e243] [cursor=pointer]:
+                  - /url: https://www.reddit.com/r/AskElectronics/comments/zz61tj/powering_led_backlights_from_12v/#:~:text=I'm%20incorporating%20a%203.5%22%204D,3.2V%20and%2022%20mA%20draw.
+              - generic [ref=e246]:
+                - generic [ref=e247]:
+                  - link "[Review Request] Boost converter for LED backlight ..." [ref=e250] [cursor=pointer]:
+                    - /url: https://www.reddit.com/r/PrintedCircuitBoard/comments/15k6683/review_request_boost_converter_for_led_backlight/
+                    - generic [ref=e251]:
+                      - text: "[Review Request]"
+                      - emphasis [ref=e252]: Boost converter
+                      - text: for
+                      - emphasis [ref=e253]: LED backlight
+                      - text: ...
+                  - generic [ref=e255]: 14 answers
+                  - generic [ref=e257]: Aug 7, 2023
+                - generic [ref=e258]:
+                  - link "How do I connect 10 3.0 - 3.2 volts LEDs to a 12v ..." [ref=e261] [cursor=pointer]:
+                    - /url: https://www.reddit.com/r/AskElectronics/comments/1cruvk2/how_do_i_connect_10_30_32_volts_leds_to_a_12v/
+                    - generic [ref=e262]:
+                      - text: How do I connect 10 3.0 - 3.2 volts
+                      - emphasis [ref=e263]: LEDs
+                      - text: to a
+                      - emphasis [ref=e264]: 12v
+                      - text: ...
+                  - generic [ref=e266]: 14 answers
+                  - generic [ref=e268]: May 14, 2024
+                - link "More results from www.reddit.com" [ref=e272] [cursor=pointer]:
+                  - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order+site:www.reddit.com&sca_esv=6b444b0aa3e3f3f7&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQrQIoAnoECBkQAw
+              - generic [ref=e274]: "Missing: enable ‎BLON"
+          - generic [ref=e278]:
+            - generic [ref=e281]:
+              - link "Powering 7 LEDs in series Electrical Engineering Stack Exchange https://electronics.stackexchange.com › questions › pow..." [ref=e283] [cursor=pointer]:
+                - /url: https://electronics.stackexchange.com/questions/284959/powering-7-leds-in-series
+                - heading "Powering 7 LEDs in series" [level=3] [ref=e284]
+                - generic [ref=e289]:
+                  - generic [ref=e291]: Electrical Engineering Stack Exchange
+                  - generic [ref=e293]: https://electronics.stackexchange.com › questions › pow...
+              - button "About this result" [ref=e294] [cursor=pointer]:
+                - img [ref=e297]
+            - generic [ref=e300]:
+              - generic [ref=e301]: Feb 7, 2017 —
+              - text: I'm trying to create a schematic for powering 196 LEDs (yellow, 2.1V, 20mA) by using 2 or 1 of these LED drivers STP16CPP05 which is 16 channel (40mA ...
+            - generic [ref=e306]:
+              - link "1 answer" [ref=e307] [cursor=pointer]:
+                - /url: https://electronics.stackexchange.com/a/284975
+              - generic [ref=e308]: ·
+              - generic [ref=e309]: "Top answer:"
+              - generic [ref=e310]: "Bad news: your design isn't quite realistic exactly as it is. But let's try to make it workable. First, a basic information: you don't need the resistors. ..."
+            - generic [ref=e313]:
+              - generic [ref=e314]:
+                - link "Picking the right boost/buck converter to power LEDs from 12 ..." [ref=e317] [cursor=pointer]:
+                  - /url: https://electronics.stackexchange.com/questions/630632/picking-the-right-boost-buck-converter-to-power-leds-from-12-v-battery
+                  - generic [ref=e318]:
+                    - text: Picking the right
+                    - emphasis [ref=e319]: boost
+                    - text: /buck
+                    - emphasis [ref=e320]: converter
+                    - text: to
+                    - emphasis [ref=e321]: power LEDs
+                    - text: from 12 ...
+                - generic [ref=e323]: Aug 10, 2022
+              - generic [ref=e324]:
+                - link "Driving LCD backlight using boost converter (Feedback loop ..." [ref=e327] [cursor=pointer]:
+                  - /url: https://electronics.stackexchange.com/questions/582920/driving-lcd-backlight-using-boost-converter-feedback-loop-constant-current
+                  - generic [ref=e328]:
+                    - text: Driving LCD
+                    - emphasis [ref=e329]: backlight
+                    - text: using
+                    - emphasis [ref=e330]: boost converter
+                    - text: (Feedback loop ...
+                - generic [ref=e332]: Aug 24, 2021
+              - link "More results from electronics.stackexchange.com" [ref=e336] [cursor=pointer]:
+                - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order+site:electronics.stackexchange.com&sca_esv=6b444b0aa3e3f3f7&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQrQIoAnoECBoQAw
+            - generic [ref=e338]:
+              - text: "Missing: BLON ‎| Show results with:"
+              - link "BLON" [ref=e339] [cursor=pointer]:
+                - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+%22BLON%22+order&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ5t4CegQIIRAB
+          - generic [ref=e346]:
+            - generic [ref=e349]:
+              - link "The ULTIMATE 5v, 12v 24v LED Setup Guide for Beginners ... YouTube · Chris Maher 227.6K+ views · 1 year ago" [ref=e351] [cursor=pointer]:
+                - /url: https://www.youtube.com/watch?v=V2EztnKFizU&vl=en
+                - heading "The ULTIMATE 5v, 12v 24v LED Setup Guide for Beginners ..." [level=3] [ref=e352]
+                - generic [ref=e357]:
+                  - generic [ref=e359]: YouTube · Chris Maher
+                  - generic [ref=e361]: 227.6K+ views · 1 year ago
+              - button "About this result" [ref=e362] [cursor=pointer]:
+                - img [ref=e365]
+            - generic [ref=e367]:
+              - button "The ULTIMATE 5v, 12v 24v LED Setup Guide for Beginners ... by Chris Maher on YouTube. Play on Google. 15:23" [ref=e368] [cursor=pointer]:
+                - generic [ref=e370]:
+                  - img [ref=e376]
+                  - generic [ref=e379]:
+                    - generic [ref=e380]: 15:23
+                    - img [ref=e383]
+              - generic [ref=e386]: The ULTIMATE 5v, 12v 24v LED Setup Guide for Beginners. EASY Plug n Play WLED + Sound React WLED. 227K views · 1 year ago ...more ...
+            - generic [ref=e388]: "Missing: backlight ‎enable ‎BLON"
+          - generic [ref=e393]:
+            - heading "People also ask" [level=2] [ref=e395]
+            - generic [ref=e396]:
+              - button "How to connect LED strip lights to 12V power supply?" [ref=e402] [cursor=pointer]:
+                - generic [ref=e404]: How to connect LED strip lights to 12V power supply?
+                - img [ref=e407]
+              - button "Do LED drivers output AC or DC?" [ref=e416] [cursor=pointer]:
+                - generic [ref=e418]: Do LED drivers output AC or DC?
+                - img [ref=e421]
+              - generic [ref=e427]:
+                - button "How to check LED TV backlight voltage?" [ref=e430] [cursor=pointer]:
+                  - generic [ref=e432]: How to check LED TV backlight voltage?
+                  - img [ref=e435]
+                - text: "\"... ...\" \"... ...\""
+              - button "Which color LED requires less voltage?" [ref=e444] [cursor=pointer]:
+                - generic [ref=e446]: Which color LED requires less voltage?
+                - img [ref=e449]
+          - generic [ref=e454]:
+            - heading "Web results" [level=2] [ref=e455]
+            - generic [ref=e456]:
+              - generic [ref=e459]:
+                - link "Turning on LEDs in sequence after a condition All About Circuits https://forum.allaboutcircuits.com › threads › turning-o..." [ref=e461] [cursor=pointer]:
+                  - /url: https://forum.allaboutcircuits.com/threads/turning-on-leds-in-sequence-after-a-condition.145348/
+                  - heading "Turning on LEDs in sequence after a condition" [level=3] [ref=e462]
+                  - generic [ref=e467]:
+                    - generic [ref=e469]: All About Circuits
+                    - generic [ref=e471]: https://forum.allaboutcircuits.com › threads › turning-o...
+                - button "About this result" [ref=e472] [cursor=pointer]:
+                  - img [ref=e475]
+              - generic [ref=e478]:
+                - generic [ref=e479]: Feb 9, 2018 —
+                - generic [ref=e480]:
+                  - text: I figure once the dynamo is over a set
+                  - emphasis [ref=e481]: voltage
+                  - text: ", the first"
+                  - emphasis [ref=e482]: LED
+                  - text: would
+                  - emphasis [ref=e483]: turn on
+                  - text: and now they will have to crank harder to maintain the
+                  - emphasis [ref=e484]: voltage
+                  - text: and ...
+                - link "Read more" [ref=e485] [cursor=pointer]:
+                  - /url: https://forum.allaboutcircuits.com/threads/turning-on-leds-in-sequence-after-a-condition.145348/#:~:text=I%20figure%20once%20the%20dynamo,it%20is%20trying%20to%20supply.
+              - generic [ref=e487]: "Missing: backlight ‎BLON"
+          - generic [ref=e491]:
+            - generic [ref=e494]:
+              - link "LED Backlight System and Power Solutions Richtek Technology https://www.richtek.com › ..." [ref=e496] [cursor=pointer]:
+                - /url: https://www.richtek.com/Design%20Support/Technical%20Document/AN006
+                - heading "LED Backlight System and Power Solutions" [level=3] [ref=e497]
+                - generic [ref=e502]:
+                  - generic [ref=e504]: Richtek Technology
+                  - generic [ref=e506]: https://www.richtek.com › ...
+              - button "About this result" [ref=e507] [cursor=pointer]:
+                - img [ref=e510]
+            - generic [ref=e513]:
+              - generic [ref=e514]:
+                - text: The upper block is
+                - emphasis [ref=e515]: Boost Converter
+                - text: ", providing the voltages needed for"
+                - emphasis [ref=e516]: LED
+                - text: strings, and the lower block is Constant Current Dimming Controller. Technical ...
+              - link "Read more" [ref=e517] [cursor=pointer]:
+                - /url: https://www.richtek.com/Design%20Support/Technical%20Document/AN006#:~:text=The%20upper%20block%20is%20Boost,is%20Constant%20Current%20Dimming%20Controller.
+          - generic [ref=e521]:
+            - generic [ref=e524]:
+              - link "Overview of Methods for Driving LED Backlight Orient Display https://orientdisplay.com › overview-of-methods-for-dr..." [ref=e526] [cursor=pointer]:
+                - /url: https://orientdisplay.com/overview-of-methods-for-driving-led-backlight/
+                - heading "Overview of Methods for Driving LED Backlight" [level=3] [ref=e527]
+                - generic [ref=e532]:
+                  - generic [ref=e534]: Orient Display
+                  - generic [ref=e536]: https://orientdisplay.com › overview-of-methods-for-dr...
+              - button "About this result" [ref=e537] [cursor=pointer]:
+                - img [ref=e540]
+            - generic [ref=e543]:
+              - generic [ref=e544]: Sep 16, 2025 —
+              - generic [ref=e545]:
+                - text: The brightness of an
+                - emphasis [ref=e546]: LED
+                - text: is primarily determined by its forward
+                - emphasis [ref=e547]: voltage
+                - text: (VF) and forward current (IF). The current–
+                - emphasis [ref=e548]: voltage
+                - text: characteristic curve ...
+              - link "Read more" [ref=e549] [cursor=pointer]:
+                - /url: https://orientdisplay.com/overview-of-methods-for-driving-led-backlight/#:~:text=The%20brightness%20of%20an%20LED,is%20shown%20in%20Figure%201.
+          - generic [ref=e553]:
+            - generic [ref=e556]:
+              - link "Different Methods to Drive LEDs Using TPS63XXX Buck- ... TI.com https://www.ti.com › lit › pdf › slva419" [ref=e558] [cursor=pointer]:
+                - /url: https://www.ti.com/lit/pdf/slva419
+                - heading "Different Methods to Drive LEDs Using TPS63XXX Buck- ..." [level=3] [ref=e559]
+                - generic [ref=e564]:
+                  - generic [ref=e566]: TI.com
+                  - generic [ref=e568]: https://www.ti.com › lit › pdf › slva419
+              - generic [ref=e569]:
+                - generic:
+                  - generic: PDF
+              - button "About this result" [ref=e570] [cursor=pointer]:
+                - img [ref=e573]
+            - generic [ref=e576]:
+              - generic [ref=e577]:
+                - text: This application note describes how to drive
+                - emphasis [ref=e578]: LEDs
+                - text: using standard DC/DC converters. The circuit examples used here are based on devices from the TPS63xxx buck- ...
+              - link "Read more" [ref=e579] [cursor=pointer]:
+                - /url: https://www.ti.com/lit/pdf/slva419#:~:text=This%20application%20note%20describes%20how,the%20TPS63xxx%20buck%2Dboost%20converter%20family.
+          - generic [ref=e586]:
+            - generic [ref=e589]:
+              - link "How to Drive High Power LEDs With A DC-DC Adjustable ... YouTube · Core Electronics 76.2K+ views · 4 years ago" [ref=e591] [cursor=pointer]:
+                - /url: https://www.youtube.com/watch?v=rDkP97-BHXI
+                - heading "How to Drive High Power LEDs With A DC-DC Adjustable ..." [level=3] [ref=e592]
+                - generic [ref=e597]:
+                  - generic [ref=e599]: YouTube · Core Electronics
+                  - generic [ref=e601]: 76.2K+ views · 4 years ago
+              - button "About this result" [ref=e602] [cursor=pointer]:
+                - img [ref=e605]
+            - generic [ref=e607]:
+              - button "How to Drive High Power LEDs With A DC-DC Adjustable ... by Core Electronics on YouTube. Play on Google. 11:30" [ref=e608] [cursor=pointer]:
+                - generic [ref=e610]:
+                  - img [ref=e613]
+                  - generic [ref=e616]:
+                    - generic [ref=e617]: 11:30
+                    - img [ref=e620]
+              - generic [ref=e623]: In this video I will power a single 3W Led and then 4 of these LED nodes in series. ... LEDs you will need a boost (step-up) converter. If you ...
+            - button "15 key moments in this video" [ref=e628] [cursor=pointer]:
+              - generic [ref=e631]:
+                - generic [ref=e634]: 15 key moments in this video
+                - img [ref=e636]
+            - generic [ref=e639]: "Missing: backlight ‎BLON"
+          - generic [ref=e643]:
+            - generic [ref=e646]:
+              - link "How could I install a new 12 volt backlight? element14 Community https://community.element14.com › experts › forum" [ref=e648] [cursor=pointer]:
+                - /url: https://community.element14.com/technologies/experts/f/forum/29093/how-could-i-install-a-new-12-volt-backlight
+                - heading "How could I install a new 12 volt backlight?" [level=3] [ref=e649]
+                - generic [ref=e654]:
+                  - generic [ref=e656]: element14 Community
+                  - generic [ref=e658]: https://community.element14.com › experts › forum
+              - button "About this result" [ref=e659] [cursor=pointer]:
+                - img [ref=e662]
+            - generic [ref=e665]:
+              - generic [ref=e666]: Dec 20, 2015 —
+              - generic [ref=e667]:
+                - text: The
+                - emphasis [ref=e668]: enable
+                - text: line on the
+                - emphasis [ref=e669]: LED
+                - text: driver can take as little as 5v (based on what I used on the PC
+                - emphasis [ref=e670]: power
+                - text: supply) to
+                - emphasis [ref=e671]: turn on
+                - text: ", so that can be separate."
+              - link "Read more" [ref=e672] [cursor=pointer]:
+                - /url: https://community.element14.com/technologies/experts/f/forum/29093/how-could-i-install-a-new-12-volt-backlight#:~:text=The%20enable%20line%20on%20the,so%20that%20can%20be%20separate.
+            - generic [ref=e674]:
+              - text: "Missing: BLON ‎| Show results with:"
+              - link "BLON" [ref=e675] [cursor=pointer]:
+                - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=LED+backlight+boost+converter+power+on+sequence+12V+enable+%22BLON%22+order&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ5t4CegQISBAB
+          - generic [ref=e679]:
+            - generic [ref=e682]:
+              - link "Highway66 Mini-Bowling Attraction User Manual - qubicaamf.ru qubicaamf.ru https://qubicaamf.ru › tekhnicheskaya-sluzhba" [ref=e684] [cursor=pointer]:
+                - /url: https://qubicaamf.ru/obsluzhivanie/tekhnicheskaya-sluzhba/Highway%2066.pdf
+                - heading "Highway66 Mini-Bowling Attraction User Manual - qubicaamf.ru" [level=3] [ref=e685]
+                - generic [ref=e690]:
+                  - generic [ref=e692]: qubicaamf.ru
+                  - generic [ref=e694]: https://qubicaamf.ru › tekhnicheskaya-sluzhba
+              - generic [ref=e695]:
+                - generic:
+                  - generic: PDF
+              - button "About this result" [ref=e696] [cursor=pointer]:
+                - img [ref=e699]
+            - generic [ref=e701]:
+              - generic [ref=e702]:
+                - generic [ref=e703]: Jun 12, 2017 —
+                - generic [ref=e704]:
+                  - text: 1. If it is not already ON,
+                  - emphasis [ref=e705]: turn on power
+                  - text: "to the pinspotter. Warning: High"
+                  - emphasis [ref=e706]: voltage
+                  - text: is present in the pin detector circuit board ...
+                - link "Read more" [ref=e707] [cursor=pointer]:
+                  - /url: https://qubicaamf.ru/obsluzhivanie/tekhnicheskaya-sluzhba/Highway%2066.pdf#:~:text=1.%20If%20it%20is%20not,pin%20detector%20circuit%20board%20assembly.
+              - generic [ref=e708]: 173 pages
+        - generic [ref=e710]:
+          - generic [ref=e715]:
+            - heading "People also search for" [level=2] [ref=e717]
+            - generic [ref=e719]:
+              - generic [ref=e720]:
+                - link "How to connect LED lights to power supply" [ref=e724] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=How+to+connect+LED+lights+to+power+supply&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAgzEAE
+                  - generic [ref=e725]:
+                    - generic [ref=e730]: How to connect LED lights to power supply
+                    - img [ref=e734]
+                - link "How to connect LED strip lights to power supply" [ref=e739] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=How+to+connect+LED+strip+lights+to+power+supply&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAhBEAE
+                  - generic [ref=e740]:
+                    - generic [ref=e745]: How to connect LED strip lights to power supply
+                    - img [ref=e749]
+                - link "Ledble Input DC 5-24V Output 5A CH" [ref=e754] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=Ledble+Input+DC+5-24V+Output+5A+CH&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAgyEAE
+                  - generic [ref=e755]:
+                    - generic [ref=e760]: Ledble Input DC 5-24V Output 5A CH
+                    - img [ref=e764]
+                - link "How to connect LED lights together without connector" [ref=e769] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=How+to+connect+LED+lights+together+without+connector&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAg7EAE
+                  - generic [ref=e770]:
+                    - generic [ref=e775]: How to connect LED lights together without connector
+                    - img [ref=e779]
+              - generic [ref=e781]:
+                - link "Power LED strip from both ends" [ref=e785] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=Power+LED+strip+from+both+ends&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAg4EAE
+                  - generic [ref=e786]:
+                    - generic [ref=e791]: Power LED strip from both ends
+                    - img [ref=e795]
+                - link "How to power LED lights" [ref=e800] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=How+to+power+LED+lights&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAg2EAE
+                  - generic [ref=e801]:
+                    - generic [ref=e806]: How to power LED lights
+                    - img [ref=e810]
+                - link "How to connect LED controller to LED lights" [ref=e815] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=How+to+connect+LED+controller+to+LED+lights&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAg0EAE
+                  - generic [ref=e816]:
+                    - generic [ref=e821]: How to connect LED controller to LED lights
+                    - img [ref=e825]
+                - link "Ledble Power Supply" [ref=e830] [cursor=pointer]:
+                  - /url: /search?sca_esv=6b444b0aa3e3f3f7&q=Ledble+Power+Supply&sa=X&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ1QJ6BAg1EAE
+                  - generic [ref=e831]:
+                    - generic [ref=e836]: Ledble Power Supply
+                    - img [ref=e840]
+          - navigation [ref=e842]:
+            - heading "Page Navigation" [level=1] [ref=e843]
+            - text: "1"
+            - link "Page 2" [ref=e846] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=10&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAE
+              - text: "2"
+            - link "Page 3" [ref=e848] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=20&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAG
+              - text: "3"
+            - link "Page 4" [ref=e850] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=30&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAI
+              - text: "4"
+            - link "Page 5" [ref=e852] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=40&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAK
+              - text: "5"
+            - link "Page 6" [ref=e854] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=50&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAM
+              - text: "6"
+            - link "Page 7" [ref=e856] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=60&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAO
+              - text: "7"
+            - link "Page 8" [ref=e858] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=70&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAQ
+              - text: "8"
+            - link "Page 9" [ref=e860] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=80&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAS
+              - text: "9"
+            - link "Page 10" [ref=e862] [cursor=pointer]:
+              - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=90&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8tMDegQIMBAU
+              - text: "10"
+            - heading "Next" [level=2] [ref=e864]:
+              - link "Next" [ref=e865] [cursor=pointer]:
+                - /url: /search?q=LED+backlight+boost+converter+power+on+sequence+12V+enable+BLON+order&sca_esv=6b444b0aa3e3f3f7&ei=BNUkasinLvqjqtsPwOfeyAo&start=10&sa=N&sstk=AU9db-C3j2VF9BFF1rdpiaO95g9GAwK9dyk3JPbZBXgARQ34eCWnwrOpP2iQ2snoc_krbG1vBX3Mf5ecIZ3rUJlh-GcFsWtOg-6jDQ&ved=2ahUKEwjIuZ-biPSUAxX6kWoFHcCzF6kQ8NMDegQIMBAW
+                - generic [ref=e867]: Next
+        - navigation
+    - contentinfo [ref=e868]:
+      - heading "Footer Links" [level=1] [ref=e869]
+      - generic [ref=e873]:
+        - generic [ref=e877]:
+          - button "Village At Western Oaks, Austin, TX - From your IP address" [ref=e879] [cursor=pointer]:
+            - generic [ref=e880]: Village At Western Oaks, Austin, TX
+            - generic [ref=e882]:
+              - text: "-"
+              - generic [ref=e883]: From your IP address
+          - text: "-"
+          - button "Update location" [ref=e885] [cursor=pointer]: Update location
+        - generic [ref=e888]:
+          - link "Help" [ref=e889] [cursor=pointer]:
+            - /url: https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1
+          - link "Send feedback" [ref=e890] [cursor=pointer]:
+            - /url: "#"
+          - link "Privacy" [ref=e891] [cursor=pointer]:
+            - /url: https://policies.google.com/privacy?hl=en&fg=1
+          - link "Terms" [ref=e892] [cursor=pointer]:
+            - /url: https://policies.google.com/terms?hl=en&fg=1

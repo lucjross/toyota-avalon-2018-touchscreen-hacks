@@ -1,0 +1,9 @@
+- generic [ref=e258]:
+  - generic [ref=e260]:
+    - generic [ref=e262]
+    - link "Go back to filtering menu" [ref=e2250] [cursor=pointer]:
+      - /url: "#s-skipLinkTargetForFilterOptions"
+  - generic [ref=e2252]:
+    - link "Skip to main search results" [ref=e2253] [cursor=pointer]:
+      - /url: "#s-skipLinkTargetForMainSearchResults"
+    - generic [ref=e2259]
