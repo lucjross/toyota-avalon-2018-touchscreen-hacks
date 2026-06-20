@@ -77,13 +77,22 @@ dpi_output_format=0x30026
 #             <v_sync_offset_a> <v_sync_offset_b> <pixel_rep>
 #             <frame_rate> <interlaced> <pixel_freq> <aspect_ratio>
 #
-# H total = 800 + 40 + 48 + 87 = 975
-# V total = 480 + 42 +  3 +  2 = 527
-# Pixel clock = 33.26 MHz (datasheet typ). HSYNC leading edge = h_active + h_fp = 840;
-# keep that sum (and the porch split) FIXED — moving it shifts HSYNC vs VSYNC phase and
-# breaks the Pico's marginal vertical (GSPU) lock. Tune horizontal margin via
-# framebuffer_width (see above), NOT the porches.
-hdmi_timings=800 0 40 48 87 480 0 42 3 2 0 0 0 60 0 33260000 6
+# H total = 800 + 40 + 48 + 88 = 976   V total = 480 + 42 + 3 + 2 = 527
+#
+# Two coupled constraints kill the horizontal waviness (a beat between the Pi pixel
+# clock and the Pico's 125 MHz clock):
+#   1. pixel_freq = 33,333,000 (~500 MHz / 15) is a clean integer divide the Pi makes
+#      WITHOUT a fractional/MASH divider, so the clock itself doesn't dither.
+#      (Avoid 33,260,000: the Pi can't hit it and dithers to ~33,264,000.)
+#   2. H total must be a multiple of 4. At 33.333 MHz, 125/33.333 = 3.75, so a line of
+#      976 px = 976 * 3.75 = 3660 Pico clocks EXACTLY -> every HSYNC lands on the same
+#      Pico-clock phase -> no per-line phase walk -> no wave. 975 left a .25 remainder
+#      (3656.25) = a fast 4-line wave. The +1 px is taken from the BACK porch (h_bp
+#      87->88), which is after the HSYNC edge, so HSYNC-vs-VSYNC phase is unchanged and
+#      the Pico vertical (GSPU) lock stays put. Do NOT take it from h_fp / h_sync.
+#
+# HSYNC leading edge = h_active + h_fp = 840; keep that sum fixed (vertical lock).
+hdmi_timings=800 0 40 48 88 480 0 42 3 2 0 0 0 60 0 33333000 6
 
 [cm4]
 # Enable host mode on the 2711 built-in XHCI USB controller.
