@@ -17,12 +17,12 @@ dpi_mode=87
 
 # dpi_output_format bit field:
 #   [3:0]  = 6 → 18bpp RGB666 packed
-#   [4]    = 2 → RGB order normal
-#   [8]    = 0 → clock not inverted
-#   [9]    = 0 → DE active high
-#   [11]   = 1 → HSYNC active low
-#   [12]   = 1 → VSYNC active low
-dpi_output_format=0x7f226
+#   [7:4]  = 2 → BGR order
+#   [8]    = 0 → output enable mode (Data Valid)
+#   [9]    = 0 → clock not inverted
+#   [14:12] = 0 → enable HSYNC, VSYNC, and OE
+#   [18:16] = 3 → HSYNC active low (bit 16), VSYNC active low (bit 17), DE active high (bit 18 = 0)
+dpi_output_format=0x30026
 
 # hdmi_timings=<h_active> <h_sync_pol> <h_fp> <h_sync> <h_bp>
 #             <v_active> <v_sync_pol> <v_fp> <v_sync> <v_bp>

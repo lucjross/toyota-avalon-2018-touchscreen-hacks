@@ -1,46 +1,37 @@
 /*
- * LA070WV1-TD01 gate/source timing generator
+ * LA070WV1-TD01 auxiliary controller
  * Target: Arduino Nano ESP32 (ESP32-S3, Arduino core 3.x)
  *
- * Inputs  (from Pi DPI):
- *   D2 ← VSYNC  (Pi GPIO 3, active-low, ~60 Hz)
- *   D3 ← HSYNC  (Pi GPIO 2, active-low, ~31.5 kHz)
+ * The pixel-critical timing (SSPL, GSPU, GSC) is driven DIRECTLY from the Pi's
+ * pixel-locked sync outputs — NOT regenerated here. A software ISR cannot place
+ * an edge with 30 ns precision relative to the 33.26 MHz source clock, which is
+ * what caused the horizontal jitter/scanning. See LA070WV1-TD01_pinout.md.
  *
- * Outputs (to FPC breakout):
- *   D4 → GSPU   gate start pulse up        FPC pin 6
- *   D5 → SSPL   source start pulse left    FPC pin 59
- *   D6 → GOE    gate output enable         FPC pin 9  (active-low)
- *   D7 → POL    polarity (toggle per line) FPC pin 26
- *   D8 → GSC    gate shift clock ~31.5kHz  FPC pin 8  (50% PWM)
+ *   Pi GPIO2 (HSYNC) → FPC 59 (SSPL) + FPC 8 (GSC)   [direct, jitter-free]
+ *   Pi GPIO3 (VSYNC) → FPC 6  (GSPU)                 [direct, jitter-free]
+ *   Pi GPIO0 (PCLK)  → FPC 20 (SSC)
+ *   Pi GPIO1 (DE)    → FPC 27 (SOE)
+ *
+ * This sketch keeps only the non-pixel-critical jobs (µs-tolerant):
+ *   D2 ← HSYNC  (Pi GPIO 2, line-rate reference for POL)
+ *   D6 → GOE    gate output enable     FPC pin 9  (active-low; held enabled)
+ *   D7 → POL    polarity (per line)    FPC pin 26
+ * plus touchscreen, backlight, and UART to the Pi.
  *
  * Inputs  (4-wire resistive touchscreen):
- *   D9  ↔ Touch A+  adapter pin 1  (~530Ω axis)
- *   D10 ↔ Touch B+  adapter pin 3  (~177Ω axis)
+ *   A2  ↔ Touch A+  adapter pin 1  (~530Ω axis)
+ *   A1  ↔ Touch B+  adapter pin 3  (~177Ω axis)
  *   D11 ↔ Touch A−  adapter pin 5
- *   D12 ↔ Touch B−  adapter pin 7
+ *   D10 ↔ Touch B−  adapter pin 7
  *
  * UART to Pi (Pi GPIO 22/23, /dev/ttyAMA3, 115200 baud):
  *   D13 → Pi GPIO 23 (Pi RX)   — touch events: "T <x> <y>\n", release: "U\n"
  *   A0  ← Pi GPIO 22 (Pi TX)   — commands: 'e' enable, 'd' disable
  */
 
-#include "esp_timer.h"
-
-#define VSYNC_IN  D2
-#define HSYNC_IN  D3
-#define GSPU_OUT  D4
-#define SSPL_OUT  D5
+#define HSYNC_IN  D2   // Pi GPIO 2, line-rate reference for POL toggling
 #define GOE_OUT   D6
 #define POL_OUT   D7
-#define GSC_OUT   D8
-
-// GSC frequency = pixel_clock / h_total = 33,260,000 / 1056
-#define GSC_HZ  31496
-
-// Pulse widths in microseconds — widen if driver shows setup/hold violations
-#define GSPU_US  32   // one GSC period
-#define SSPL_US   2
-#define GOE_US   15   // ~half line period; holds gate row active while source loads
 
 // ── Touch ─────────────────────────────────────────────────────────────────────
 #define TOUCH_AP  A2   // ADC1 (GPIO3)
@@ -110,43 +101,14 @@ static TouchPoint touch_read() {
 // ── Timing state ──────────────────────────────────────────────────────────────
 static volatile bool pol_state = false;
 static volatile bool enabled   = true;
+static volatile uint32_t hsync_count = 0;
 
-// One-shot timer callbacks — run from ISR context (IRAM), no heap alloc
-static void IRAM_ATTR gspu_end(void*) { digitalWrite(GSPU_OUT, LOW); }
-static void IRAM_ATTR sspl_end(void*) { digitalWrite(SSPL_OUT, LOW); }
-static void IRAM_ATTR goe_end(void*)  { digitalWrite(GOE_OUT,  HIGH); }
-
-static esp_timer_handle_t gspu_timer;
-static esp_timer_handle_t sspl_timer;
-static esp_timer_handle_t goe_timer;
-
-static void create_isr_timer(esp_timer_cb_t cb, esp_timer_handle_t* handle) {
-  esp_timer_create_args_t args = {};
-  args.callback        = cb;
-  args.dispatch_method = ESP_TIMER_TASK;
-  args.skip_unhandled_events = true;
-  esp_timer_create(&args, handle);
-}
-
-// VSYNC falling edge: start gate scan from row 0
-static void ARDUINO_ISR_ATTR vsync_isr() {
-  if (!enabled) return;
-  digitalWrite(GSPU_OUT, HIGH);
-  esp_timer_start_once(gspu_timer, GSPU_US);
-}
-
-// HSYNC falling edge: advance source and gate drivers one row
+// HSYNC falling edge: flip polarity for AC drive. Not pixel-critical — POL only
+// has to be stable across a line, and a few µs of ISR latency into a ~31 µs line
+// is harmless. SSPL/GSC/GSPU are NOT generated here; the Pi drives them directly.
 static void ARDUINO_ISR_ATTR hsync_isr() {
+  hsync_count++;
   if (!enabled) return;
-  // Source start pulse — tells source IC to begin clocking in pixel data
-  digitalWrite(SSPL_OUT, HIGH);
-  esp_timer_start_once(sspl_timer, SSPL_US);
-
-  // Gate output enable — holds gate row active while source data settles
-  digitalWrite(GOE_OUT, LOW);
-  esp_timer_start_once(goe_timer, GOE_US);
-
-  // Polarity inversion — AC drive, alternate every line
   pol_state = !pol_state;
   digitalWrite(POL_OUT, pol_state);
 }
@@ -155,61 +117,51 @@ void setup() {
   Serial.begin(115200);
   Serial1.begin(115200, SERIAL_8N1, A0, D13);  // RX=A0, TX=D13 (reserved, unused)
 
-  pinMode(VSYNC_IN, INPUT);
   pinMode(HSYNC_IN, INPUT);
-  pinMode(GSPU_OUT, OUTPUT);
-  pinMode(SSPL_OUT, OUTPUT);
   pinMode(GOE_OUT,  OUTPUT);
   pinMode(POL_OUT,  OUTPUT);
 
-  digitalWrite(GSPU_OUT, LOW);
-  digitalWrite(SSPL_OUT, LOW);
-  digitalWrite(GOE_OUT,  HIGH);  // active-low: start disabled
+  // GOE active-low: hold gate output continuously enabled for the first bring-up.
+  // If row-to-row ghosting appears, add a per-line GOE pulse later.
+  digitalWrite(GOE_OUT,  LOW);
   digitalWrite(POL_OUT,  LOW);
 
-  create_isr_timer(gspu_end, &gspu_timer);
-  create_isr_timer(sspl_end, &sspl_timer);
-  create_isr_timer(goe_end,  &goe_timer);
-
-  // GSC: continuous 50% PWM via hardware LEDC (channel 0)
-  ledcSetup(0, GSC_HZ, 8);
-  ledcAttachPin(GSC_OUT, 0);
-  ledcWrite(0, 128);
-
-  attachInterrupt(digitalPinToInterrupt(VSYNC_IN), vsync_isr, FALLING);
   attachInterrupt(digitalPinToInterrupt(HSYNC_IN), hsync_isr, FALLING);
 }
 
 void loop() {
-  // Handle Pi commands
+  // Handle Pi commands. 'e'/'d' now only gate POL and the gate output enable;
+  // the Pi's own sync outputs drive SSPL/GSC/GSPU regardless.
   while (Serial1.available()) {
     char cmd = Serial1.read();
     if (cmd == 'e') {
       enabled = true;
-      ledcWrite(0, 128);
+      digitalWrite(GOE_OUT, LOW);   // enable gate output (active-low)
     } else if (cmd == 'd') {
       enabled = false;
-      ledcWrite(0, 0);
-      digitalWrite(GSPU_OUT, LOW);
-      digitalWrite(SSPL_OUT, LOW);
-      digitalWrite(GOE_OUT,  HIGH);
+      digitalWrite(GOE_OUT, HIGH);  // disable gate output
     }
   }
 
   // Poll touch at ~50 Hz
   static unsigned long last_touch_ms = 0;
+  static unsigned long last_debug_ms = 0;
   static bool was_touched = false;
 
   unsigned long now = millis();
+  if (now - last_debug_ms >= 1000) {
+    last_debug_ms = now;
+    // Sanity check: HSYNC should read ~31496. VSYNC is no longer wired here.
+    Serial.printf("HSYNC/s=%u\n", hsync_count);
+    hsync_count = 0;
+  }
+
   if (now - last_touch_ms >= TOUCH_INTERVAL_MS) {
     last_touch_ms = now;
 
     if (touch_detect()) {
-      TouchPoint tp = touch_read();
-      Serial.printf("T %d %d\n", tp.x, tp.y);
       was_touched = true;
     } else if (was_touched) {
-      Serial.print("U\n");
       was_touched = false;
     }
   }

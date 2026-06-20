@@ -12,3 +12,7 @@ __pycache__/
 # Claude / Playwright MCP artifacts
 .claude/
 .playwright-mcp/
+
+# Rust build artifacts
+target/
+pico_tcon/target/

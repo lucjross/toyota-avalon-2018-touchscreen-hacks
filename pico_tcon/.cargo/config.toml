@@ -1,0 +1,11 @@
+# Project-local cargo settings (apply to any cargo command run in this folder).
+
+# What `cargo run` should execute to flash the board. elf2uf2-rs converts the
+# compiled ELF to a .uf2 and (-d) copies it to a Pico mounted in BOOTSEL mode.
+# No debug probe needed.
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "elf2uf2-rs -d"
+
+# Build for the Pico's core by default, so we don't pass --target every time.
+[build]
+target = "thumbv6m-none-eabi"

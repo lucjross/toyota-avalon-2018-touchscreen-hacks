@@ -1,0 +1,4 @@
+# Pin the toolchain + target for this project so builds are reproducible.
+[toolchain]
+channel = "stable"
+targets = ["thumbv6m-none-eabi"]
