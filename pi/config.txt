@@ -1,3 +1,46 @@
+# For more options and information see
+# http://rptl.io/configtxt
+# Some settings may impact device functionality. See link above for details
+
+# Uncomment some or all of these to enable the optional hardware interfaces
+#dtparam=i2c_arm=on
+#dtparam=i2s=on
+#dtparam=spi=on
+
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=on
+
+# Additional overlays and parameters are documented
+# /boot/firmware/overlays/README
+
+# Automatically load overlays for detected cameras
+camera_auto_detect=1
+
+# Automatically load overlays for detected DSI displays
+#display_auto_detect=1
+
+# Automatically load initramfs files, if found
+auto_initramfs=1
+
+# Enable DRM VC4 V3D driver
+#dtoverlay=vc4-kms-v3d
+#max_framebuffers=2
+
+# Don't have the firmware create an initial video= setting in cmdline.txt.
+# Use the kernel's default instead.
+disable_fw_kms_setup=1
+
+# Run in 64-bit mode
+arm_64bit=1
+
+# Disable compensation for displays with overscan
+disable_overscan=1
+
+# Run as fast as firmware / board allows
+arm_boost=1
+
+avoid_warnings=1
+
 # LA070WV1-TD01 DPI display config for Raspberry Pi 3B+
 # Append these lines to /boot/config.txt (or /boot/firmware/config.txt on newer Pi OS)
 
@@ -8,7 +51,12 @@ overscan_right=0
 overscan_top=0
 overscan_bottom=0
 
-framebuffer_width=800
+# framebuffer_width < panel 800 pulls the image in from the metal bezel pixel-perfectly:
+# the firmware places the smaller framebuffer 1:1, centered, with a real black border
+# (NOT scaled). 776 = ~12px each side. Lower for a wider border, raise toward 800 for
+# thinner. This is the horizontal-margin knob — overscan scales (soft), porch/SSPL
+# tricks latch back-porch junk and break the vertical lock.
+framebuffer_width=776
 framebuffer_height=480
 enable_dpi_lcd=1
 display_default_lcd=1
@@ -29,7 +77,21 @@ dpi_output_format=0x30026
 #             <v_sync_offset_a> <v_sync_offset_b> <pixel_rep>
 #             <frame_rate> <interlaced> <pixel_freq> <aspect_ratio>
 #
-# H total = 800 + 40 + 128 + 88 = 1056
-# V total = 480 + 13 +   2 + 32 = 527
-# Pixel clock = 1056 * 527 * 60 ≈ 33.39 MHz (datasheet typ: 33.26 MHz — adjust pixel_freq to tune)
-hdmi_timings=800 0 40 128 88 480 0 13 2 32 0 0 0 60 0 33260000 1
+# H total = 800 + 40 + 48 + 87 = 975
+# V total = 480 + 42 +  3 +  2 = 527
+# Pixel clock = 33.26 MHz (datasheet typ). HSYNC leading edge = h_active + h_fp = 840;
+# keep that sum (and the porch split) FIXED — moving it shifts HSYNC vs VSYNC phase and
+# breaks the Pico's marginal vertical (GSPU) lock. Tune horizontal margin via
+# framebuffer_width (see above), NOT the porches.
+hdmi_timings=800 0 40 48 87 480 0 42 3 2 0 0 0 60 0 33260000 6
+
+[cm4]
+# Enable host mode on the 2711 built-in XHCI USB controller.
+# This line should be removed if the legacy DWC2 controller is required
+# (e.g. for USB device mode) or if USB support is not required.
+otg_mode=1
+
+[cm5]
+dtoverlay=dwc2,dr_mode=host
+
+[all]
