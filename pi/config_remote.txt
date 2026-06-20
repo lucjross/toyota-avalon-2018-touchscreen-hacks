@@ -75,7 +75,7 @@ dpi_output_format=0x30026
 # H total = 800 + 40 + 128 + 88 = 1056
 # V total = 480 + 13 +   2 + 32 = 527
 # Pixel clock = 1056 * 527 * 60 ≈ 33.39 MHz (datasheet typ: 33.26 MHz — adjust pixel_freq to tune)
-hdmi_timings=800 0 40 48 87 480 0 43 3 2 0 0 0 60 0 32000000 6
+hdmi_timings=800 0 40 48 87 480 0 42 3 2 0 0 0 60 0 33260000 6
 
 [cm4]
 # Enable host mode on the 2711 built-in XHCI USB controller.

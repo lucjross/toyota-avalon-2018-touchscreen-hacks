@@ -6,7 +6,6 @@ use embassy_rp::bind_interrupts;
 use embassy_rp::peripherals::{PIO0, PIO1};
 use embassy_rp::pio::program::pio_asm;
 use embassy_rp::pio::{Config, Direction, InterruptHandler, Pio};
-use embassy_time::{Duration, Instant, Timer};
 
 bind_interrupts!(struct Irqs {
     PIO0_IRQ_0 => InterruptHandler<PIO0>;
@@ -18,7 +17,7 @@ async fn main(_spawner: Spawner) {
     let p = embassy_rp::init(Default::default());
 
     // Configure onboard LED (GP25) as Output
-    let mut led_pin = embassy_rp::gpio::Output::new(p.PIN_25, embassy_rp::gpio::Level::Low);
+    let _led_pin = embassy_rp::gpio::Output::new(p.PIN_25, embassy_rp::gpio::Level::Low);
 
     // ── PIO0: SSPL, SOE, GOE ──────────────────────────────────────────────
     let Pio {
@@ -133,6 +132,7 @@ async fn main(_spawner: Spawner) {
         ..
     } = Pio::new(p.PIO1, Irqs);
 
+    let vsync_pin = common1.make_pio_pin(p.PIN_9);
     let gspu_pin = common1.make_pio_pin(p.PIN_10);
     let gsc_pin = common1.make_pio_pin(p.PIN_11);
     let pol_pin = common1.make_pio_pin(p.PIN_7);
@@ -145,7 +145,12 @@ async fn main(_spawner: Spawner) {
     let gspu_prg = pio_asm!(
         "set pins, 0",        // GSPU idle low
         ".wrap_target",
-        "wait 0 gpio 9",      // VSYNC low
+    "wait_vsync_low:",
+        "wait 0 gpio 9",      // wait VSYNC low
+        "set x, 30",
+    "vsync_low_debounce:",
+        "jmp x-- vsync_low_debounce [3]", // wait 1 us
+        "jmp pin wait_vsync_low", // if VSYNC is high (noise spike), restart!
         "wait 1 gpio 9",      // VSYNC rising = frame start
         "wait 1 gpio 4",
         "wait 0 gpio 4",      // edge A (GSPU still low -> no token here)
@@ -170,7 +175,7 @@ async fn main(_spawner: Spawner) {
         "wait 1 gpio 4",
         "wait 0 gpio 4",      // HSYNC falling = line start
         "set pins, 0",        // GSC low
-        "set y, 30",
+        "set y, 5",
     "gsc_y:",
         "set x, 31",
     "gsc_x:",
@@ -180,14 +185,14 @@ async fn main(_spawner: Spawner) {
         ".wrap",
     );
 
-    // POL: toggle every line = HSYNC / 2.  gpio 4 = HSYNC.
+    // POL: toggle every active line on DE falling edge (gpio 3).
     let pol_prg = pio_asm!(
         ".wrap_target",
-        "wait 0 gpio 4",
-        "wait 1 gpio 4",
+        "wait 1 gpio 3",      // wait for DE high
+        "wait 0 gpio 3",      // wait for DE low
         "set pins, 1",
-        "wait 0 gpio 4",
-        "wait 1 gpio 4",
+        "wait 1 gpio 3",
+        "wait 0 gpio 3",
         "set pins, 0",
         ".wrap",
     );
@@ -199,6 +204,7 @@ async fn main(_spawner: Spawner) {
     let mut cfg_g = Config::default();
     cfg_g.use_program(&loaded_gspu, &[]);
     cfg_g.set_set_pins(&[&gspu_pin]);
+    cfg_g.set_jmp_pin(&vsync_pin);
     gspu_sm.set_config(&cfg_g);
     gspu_sm.set_pin_dirs(Direction::Out, &[&gspu_pin]);
     gspu_sm.set_enable(true);
@@ -217,27 +223,8 @@ async fn main(_spawner: Spawner) {
     pol_sm.set_pin_dirs(Direction::Out, &[&pol_pin]);
     pol_sm.set_enable(true);
 
-    // Configure GP9 as standard GPIO input to monitor VSYNC diagnostics via interrupts
-    let mut pin_vsync = embassy_rp::gpio::Input::new(p.PIN_9, embassy_rp::gpio::Pull::None);
-
-    let mut vsync_count = 0;
-
     loop {
-        // Wait for VSYNC rising edge with a 1-second timeout
-        match embassy_time::with_timeout(Duration::from_secs(1), pin_vsync.wait_for_rising_edge()).await {
-            Ok(_) => {
-                vsync_count += 1;
-                if vsync_count >= 60 { // 60 frames at 60Hz = toggle every 1.0s (0.5 Hz blink)
-                    led_pin.toggle();
-                    vsync_count = 0;
-                }
-            }
-            Err(_) => {
-                // Timeout: VSYNC signal missing. Blink fast (5 Hz)
-                led_pin.toggle();
-                Timer::after(Duration::from_millis(100)).await;
-            }
-        }
+        cortex_m::asm::wfi();
     }
 }
 
