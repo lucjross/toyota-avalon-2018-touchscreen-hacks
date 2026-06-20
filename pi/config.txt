@@ -82,16 +82,15 @@ dpi_output_format=0x30026
 # Two coupled constraints kill the horizontal waviness (a beat between the Pi pixel
 # clock and the Pico's 125 MHz clock):
 #   1. pixel_freq = 33,333,000 (~500 MHz / 15) is a clean integer divide the Pi makes
-#      WITHOUT a fractional/MASH divider, so the clock itself doesn't dither.
-#      (Avoid 33,260,000: the Pi can't hit it and dithers to ~33,264,000.)
-#   2. H total must be a multiple of 4. At 33.333 MHz, 125/33.333 = 3.75, so a line of
-#      976 px = 976 * 3.75 = 3660 Pico clocks EXACTLY -> every HSYNC lands on the same
-#      Pico-clock phase -> no per-line phase walk -> no wave. 975 left a .25 remainder
-#      (3656.25) = a fast 4-line wave. The +1 px is taken from the BACK porch (h_bp
-#      87->88), which is after the HSYNC edge, so HSYNC-vs-VSYNC phase is unchanged and
-#      the Pico vertical (GSPU) lock stays put. Do NOT take it from h_fp / h_sync.
-#
-# HSYNC leading edge = h_active + h_fp = 840; keep that sum fixed (vertical lock).
+#      WITHOUT a fractional/MASH divider, so the clock doesn't dither.
+#      (Avoid 33,260,000: Pi can't hit it, dithers to ~33,264,000. 31,250,000 makes NO
+#      clock at all here — dpi read 0, blank screen.)
+#   2. H total must be a multiple of 4: at 33.333 MHz, 125/33.333 = 3.75, so 976px line
+#      = 3660 Pico clocks EXACTLY -> every HSYNC lands on the same Pico-clock phase ->
+#      no per-line phase walk -> no wave. The +1px (975->976) is taken from the BACK
+#      porch (h_bp 87->88), which is after the HSYNC edge so HSYNC-vs-VSYNC phase is
+#      unchanged and the Pico vertical (GSPU) lock stays put. NEVER take it from h_fp /
+#      h_sync (h_active + h_fp = 840 must stay fixed, or the vertical lock breaks).
 hdmi_timings=800 0 40 48 88 480 0 42 3 2 0 0 0 60 0 33333000 6
 
 [cm4]
@@ -104,3 +103,20 @@ otg_mode=1
 dtoverlay=dwc2,dr_mode=host
 
 [all]
+
+# DPI RGB666 pin muxing — CRITICAL. The Pi DPI hardware does NOT output color on a
+# contiguous GPIO4-21; in RGB666 each channel is 8-bit-aligned on the data bus, so the
+# color lands on GPIO 4-9 (red), 12-17 (green), 20-25 (blue) with the unused pad bits
+# at GPIO 10,11,18,19,26,27. The panel MUST be wired to match this gappy layout
+# (red 4-9, green 12-17, blue 20-25) — see LA070WV1-TD01_pinout.md. A contiguous 4-21
+# wiring loses green's top 2 and blue's top 4 bits (gray ramp shows as colored tiles).
+# The dpi18 overlay only muxes out to GPIO21, so we explicitly mux all three data
+# groups to ALT2 (a2) and free the pad pins. GPIO26 stays free for the backlight.
+# NOTE: cmdline.txt must NOT enable the serial console (console=serial0) — that would
+# claim GPIO14/15, which are now green data lines. See pi/cmdline.txt.
+gpio=4-9=a2,np
+gpio=12-17=a2,np
+gpio=20-25=a2,np
+gpio=10-11=ip
+gpio=18-19=ip
+gpio=26-27=ip

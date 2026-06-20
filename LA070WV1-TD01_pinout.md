@@ -1,6 +1,11 @@
 # LA070WV1-TD01 60-Pin FPC Pinout
 
-Pi DPI mapping assumes `dtoverlay=dpi18`, 18-bit RGB666.
+Pi DPI mapping uses `dtoverlay=dpi18`, 18-bit RGB666, **gappy pin layout**:
+the DPI hardware 8-bit-aligns each channel, so color comes out on GPIO 4-9 (red),
+12-17 (green), 20-25 (blue) — NOT contiguous 4-21. The unused pad bits (GPIO
+10,11,18,19,26,27) are free. The panel data lines are wired to match this gappy
+layout (see Pi GPIO Summary below). Requires the `gpio=...=a2` muxing lines in
+config.txt (the dpi18 overlay alone only reaches GPIO21).
 U/D tied LOW → scan top-to-bottom, GSPU active, GSPD unused.
 L/R tied HIGH → scan left-to-right, SSPL active, SSPR unused.
 
@@ -41,18 +46,18 @@ L/R tied HIGH → scan left-to-right, SSPL active, SSPR unused.
 | 33 | R2 | Red data 2 | Pi GPIO 6 |
 | 34 | R1 | Red data 1 | Pi GPIO 5 |
 | 35 | R0 | Red data 0 [LSB] | Pi GPIO 4 |
-| 36 | G5 | Green data 5 [MSB] | Pi GPIO 15 |
-| 37 | G4 | Green data 4 | Pi GPIO 14 |
-| 38 | G3 | Green data 3 | Pi GPIO 13 |
-| 39 | G2 | Green data 2 | Pi GPIO 12 |
-| 40 | G1 | Green data 1 | Pi GPIO 11 |
-| 41 | G0 | Green data 0 [LSB] | Pi GPIO 10 |
-| 42 | B5 | Blue data 5 [MSB] | Pi GPIO 21 |
-| 43 | B4 | Blue data 4 | Pi GPIO 20 |
-| 44 | B3 | Blue data 3 | Pi GPIO 19 |
-| 45 | B2 | Blue data 2 | Pi GPIO 18 |
-| 46 | B1 | Blue data 1 | Pi GPIO 17 |
-| 47 | B0 | Blue data 0 [LSB] | Pi GPIO 16 |
+| 36 | G5 | Green data 5 [MSB] | Pi GPIO 17 |
+| 37 | G4 | Green data 4 | Pi GPIO 16 |
+| 38 | G3 | Green data 3 | Pi GPIO 15 |
+| 39 | G2 | Green data 2 | Pi GPIO 14 |
+| 40 | G1 | Green data 1 | Pi GPIO 13 |
+| 41 | G0 | Green data 0 [LSB] | Pi GPIO 12 |
+| 42 | B5 | Blue data 5 [MSB] | Pi GPIO 25 |
+| 43 | B4 | Blue data 4 | Pi GPIO 24 |
+| 44 | B3 | Blue data 3 | Pi GPIO 23 |
+| 45 | B2 | Blue data 2 | Pi GPIO 22 |
+| 46 | B1 | Blue data 1 | Pi GPIO 21 |
+| 47 | B0 | Blue data 0 [LSB] | Pi GPIO 20 |
 | 48 | VREF10 | Gamma correction voltage (0.7V) | Resistor ladder |
 | 49 | VREF9 | Gamma correction voltage (1.0V) | Resistor ladder |
 | 50 | VREF8 | Gamma correction voltage (2.78V) | Resistor ladder |
@@ -115,19 +120,23 @@ only handles the touchscreen (GOE is tied to GND for always-enabled gate output)
 | 7 | 26 | R3 | 32 |
 | 8 | 24 | R4 | 31 |
 | 9 | 21 | R5 | 30 |
-| 10 | 19 | G0 | 41 |
-| 11 | 23 | G1 | 40 |
-| 12 | 32 | G2 | 39 |
-| 13 | 33 | G3 | 38 |
-| 14 | 8 | G4 | 37 |
-| 15 | 22 | G5 | 36 |
-| 16 | 36 | B0 | 47 |
-| 17 | 11 | B1 | 46 |
-| 18 | 12 | B2 | 45 |
-| 19 | 35 | B3 | 44 |
-| 20 | 38 | B4 | 43 |
-| 21 | 40 | B5 | 42 |
+| 12 | 32 | G0 | 41 |
+| 13 | 33 | G1 | 40 |
+| 14 | 8 (TXD) | G2 | 39 |
+| 15 | 10 (RXD) | G3 | 38 |
+| 16 | 36 | G4 | 37 |
+| 17 | 11 | G5 | 36 |
+| 20 | 38 | B0 | 47 |
+| 21 | 40 | B1 | 46 |
+| 22 | 15 | B2 | 45 |
+| 23 | 16 | B3 | 44 |
+| 24 | 18 | B4 | 43 |
+| 25 | 22 | B5 | 42 |
 | 26 | 37 | Backlight enable → YS-DZ-3.1 Blue | — |
+
+GPIO 10, 11, 18, 19, 27 are the unused DPI pad bits — leave free.
+GPIO 14/15 are also the UART (TXD/RXD); the serial console must stay disabled
+(no `console=serial0` in cmdline.txt) or it fights green data.
 
 ## VREF Gamma Resistor Ladder
 
