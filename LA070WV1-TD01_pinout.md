@@ -134,7 +134,14 @@ only handles the touchscreen (GOE is tied to GND for always-enabled gate output)
 | 25 | 22 | B5 | 42 |
 | 26 | 37 | Backlight enable → YS-DZ-3.1 Blue | — |
 
-GPIO 10, 11, 18, 19, 27 are the unused DPI pad bits — leave free.
+GPIO 10, 11, 18, 19 are unused DPI pad bits — no color data, NOT wired to the panel, so
+they are free for other uses. Note: the `dpi18` overlay claims GPIO 0–21, so the
+`gpio=10-11=ip`/`gpio=18-19=ip` lines in config.txt are no-ops (the pins read `a2` at
+boot); to actually use one, re-mux it away from DPI at runtime (`pinctrl set <pin> ...`)
+or from your program — harmless to the display since nothing is connected. Usable as:
+GPIO 18 (pin 12) and 19 (pin 35) = **hardware PWM0/PWM1** or GPIO; GPIO 10 (pin 19) and
+11 (pin 23) = plain GPIO only (SPI0 is blocked — it needs GPIO 8/9 = R4/R5). GPIO 26
+(backlight) and 27 are outside the overlay range and stay free by default.
 GPIO 14/15 are also the UART (TXD/RXD); the serial console must stay disabled
 (no `console=serial0` in cmdline.txt) or it fights green data.
 

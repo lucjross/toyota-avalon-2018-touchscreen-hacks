@@ -92,4 +92,48 @@ uncleanly (recover with `sudo chvt 1`, or reboot).
 
 Debugging the startup segfaults: the dummy driver (`SDL_VIDEODRIVER=dummy`) runs over
 SSH and reproduced the first crash for `gdb -batch -ex run -ex bt`; the fbcon-only
-second crash needed gdb at the console with output redirected to a file.
+second crash needed gdb at the console with output redirected to a file. The dummy
+driver is also the way to debug audio/music over SSH (audio doesn't need a console).
+
+## Audio — Bluetooth speaker + MIDI music
+
+### Bluetooth speaker (Beats Pill) via bluez-alsa
+
+The Pi runs headless (no PipeWire/PulseAudio session), and SDL outputs to ALSA, so
+**bluez-alsa** is the right bridge (a system service exposing the BT speaker as an ALSA
+PCM — no desktop session needed). `apt install bluez-alsa-utils`; the Debian service
+already runs `bluealsa -S -p a2dp-source -p a2dp-sink` (a2dp-source is what we need —
+Pi sending to a speaker). Pair/connect with `bluetoothctl` (pair, trust, connect MAC).
+Gotcha: a speaker bonded to a phone won't connect until unpaired there; a paired PCM
+appears as `bluealsa:DEV=<MAC>,PROFILE=a2dp` / `bluealsa-cli list-pcms`. Route ALSA's
+default to it with `~/.asoundrc` (`pcm.!default` → `type plug` → `type bluealsa
+device "<MAC>" profile "a2dp"`; the `plug` resamples Doom's ~11 kHz to A2DP's 44.1 kHz).
+Then run with `SDL_AUDIODRIVER=alsa`. Expect ~150–250 ms A2DP latency on SFX.
+
+### MIDI music (the painful part — three separate fixes)
+
+prboom plays Doom's MUS music by converting to MIDI and handing it to SDL_mixer, whose
+built-in timidity renders it. All three of these had to be right:
+
+1. **`music_card -1`, NOT 0.** In `s_sound.c`: `if (!mus_card ...) return;` — music plays
+   only when `mus_card` is non-zero, so `-1` = autodetect = ENABLED and `0` = DISABLED.
+   (Setting it to 0 silently stops `I_RegisterSong` from ever being called.)
+2. **GUS patches for timidity.** `apt install timidity freepats`. The stock
+   `/etc/timidity/timidity.cfg` points at a `.sf2` soundfont, which SDL_mixer's *old*
+   timidity can't read — it needs GUS `.pat` files. Run with
+   `TIMIDITY_CFG=/etc/timidity/freepats.cfg` (patches under /usr/share/midi/freepats).
+   Verify the chain independently with a tiny `Mix_LoadMUS` test on a `.mid` file.
+3. **Code fix: force the file path for converted MIDI.** In `src/SDL/i_sound.c`
+   `I_RegisterSong`, prboom loads the converted MIDI via `Mix_LoadMUS_RW` (from memory),
+   but SDL_mixer 1.2's RW-MIDI path is silent (timidity needs a real file). Patch:
+   set `rw_midi = NULL` after `SDL_RWFromMem(outbuf, outbuf_len)` so it falls through to
+   `M_WriteFile(music_tmp, ...)` + `Mix_LoadMUS(music_tmp)`. (Symptom before: the
+   `/tmp/prboom-plus-music-*` temp file was 0 bytes and music was silent.)
+
+Note: don't blank the `mus_*` music-pack substitutions to `""` (that disables a track);
+leave them at their defaults (`*.mp3` names) — the files don't exist so prboom falls
+back to the WAD MIDI lump. freepats sounds lo-fi but it's real instrument MIDI.
+
+Final run line:
+`TIMIDITY_CFG=/etc/timidity/freepats.cfg SDL_VIDEODRIVER=fbcon SDL_FBDEV=/dev/fb0
+SDL_AUDIODRIVER=alsa ./prboom-plus -iwad ~/.prboom-plus/doom2.wad`

@@ -52,6 +52,9 @@ async fn main(_spawner: Spawner) {
         "sspl_x:",
         "jmp x-- sspl_x [4]", // 5 cycles per inner loop. 5 * 8 = 40 cycles.
         "jmp y-- sspl_y",     // 1 cycle. Total = 8 * 41 = 328 system clock cycles (~2.63us)
+                              // matches h_bp=88 (htotal=976). GSC runs 34.15kHz (slightly over
+                              // the 31.2-31.8kHz spec) but ran clean; htotal=1056 fixed the
+                              // spec but reintroduced horizontal waviness, so reverted.
         "wait 0 gpio 2",      // wait for SSC low
         "wait 1 gpio 2",      // wait for SSC high (align to clock edge)
         "set pins, 1",        // set SSPL high
@@ -86,15 +89,12 @@ async fn main(_spawner: Spawner) {
     // transition so adjacent rows don't overlap. That blanking is what isolates
     // the rows. Datasheet GOE pulse width >=1us. gpio 4 = HSYNC.
     let goe_prg = pio_asm!(
-        "set pins, 0",        // idle LOW: gate enabled
+        "set pins, 1",        // idle HIGH: gate disabled (blanked)
         ".wrap_target",
-        "wait 1 gpio 4",
-        "wait 0 gpio 4",      // HSYNC falling edge = row advance
-        "set pins, 1",        // GOE high: blank the transition
-        "set x, 31",
-    "goe_delay:",
-        "jmp x-- goe_delay [5]", // 32 * 6 = 192 system clock cycles ≈ 1.53 us
-        "set pins, 0",        // GOE low: re-enable
+        "wait 1 gpio 3",      // wait for DE high (active video starts)
+        "set pins, 0",        // GOE low: enable gates
+        "wait 0 gpio 3",      // wait for DE low (blanking starts)
+        "set pins, 1",        // GOE high: blank porches and transition
         ".wrap",
     );
 
@@ -132,7 +132,6 @@ async fn main(_spawner: Spawner) {
         ..
     } = Pio::new(p.PIO1, Irqs);
 
-    let vsync_pin = common1.make_pio_pin(p.PIN_9);
     let gspu_pin = common1.make_pio_pin(p.PIN_10);
     let gsc_pin = common1.make_pio_pin(p.PIN_11);
     let pol_pin = common1.make_pio_pin(p.PIN_7);
@@ -147,53 +146,54 @@ async fn main(_spawner: Spawner) {
         ".wrap_target",
     "wait_vsync_low:",
         "wait 0 gpio 9",      // wait VSYNC low
-        "set x, 30",
-    "vsync_low_debounce:",
-        "jmp x-- vsync_low_debounce [3]", // wait 1 us
-        "jmp pin wait_vsync_low", // if VSYNC is high (noise spike), restart!
+    "wait_vsync_high:",
         "wait 1 gpio 9",      // VSYNC rising = frame start
-        "wait 1 gpio 4",
-        "wait 0 gpio 4",      // edge A (GSPU still low -> no token here)
-        "set pins, 1",        // GSPU high
-        "wait 1 gpio 4",
-        "wait 0 gpio 4",      // edge B: token loads (GSPU high, ~1 line setup)
-        "set x, 30",
+        "set x, 31",          // start VSYNC-HSYNC bypass delay
+    "vsync_delay:",
+        "jmp x-- vsync_delay [31]", // delay ~8 us (1024 cycles) to step past HSYNC transition window
+        "wait 0 gpio 4",      // wait for HSYNC to go low (first line's blanking start)
+        "set pins, 1",        // GSPU high (starts setup before GSC rising)
+        "set y, 15",          // delay 1 us (128 cycles)
     "gspu_hold:",
-        "jmp x-- gspu_hold [3]", // 31 * 4 = 124 system clock cycles ≈ 1.0 us
-        "set pins, 0",        // GSPU low before the next edge
+        "jmp y-- gspu_hold [7]", // 16 * 8 = 128 cycles ≈ 1.0 us
+        "set pins, 0",        // GSPU low
+        "wait 0 gpio 9",      // wait VSYNC low (end of frame) to prevent re-triggering
         ".wrap",
     );
 
-    // GSC: gate clock with ONE clean advance edge per line, at mid-line. At each
-    // HSYNC falling edge (line start) drop GSC low, wait ~half a line (~15.8 us),
-    // then raise it — that rising edge advances the gate, and it sits far from
-    // HSYNC's edges so GSPU's window spans exactly one of them.
+    // GSC: gate clock with ONE clean advance edge per line, during horizontal blanking.
+    // At each HSYNC falling edge drop GSC low, wait ~512 ns, then raise it — that rising
+    // edge advances the gate while GOE has the outputs blanked (DE low), so the row
+    // transition draws no current on the active line. Doing this advance mid-active-line
+    // (the old behavior) dumped current spikes into the rails and caused the line shimmer.
     // gpio 4 = HSYNC.
     let gsc_prg = pio_asm!(
         "set pins, 0",
         ".wrap_target",
-        "wait 1 gpio 4",
-        "wait 0 gpio 4",      // HSYNC falling = line start
+        "wait 0 gpio 4",      // HSYNC falling edge
         "set pins, 0",        // GSC low
-        "set y, 5",
-    "gsc_y:",
-        "set x, 31",
-    "gsc_x:",
-        "jmp x-- gsc_x [1]",  // inner loop
-        "jmp y-- gsc_y",      // wait ~2015 system clock cycles ≈ 16.12 us (half line)
-        "set pins, 1",        // GSC high: the single advance edge, at mid-line
+        "set x, 31",          // delay 512 ns (64 cycles at 125MHz)
+    "gsc_delay:",
+        "jmp x-- gsc_delay [1]",
+        "set pins, 1",        // GSC high: row advance during blanking
+        "wait 1 gpio 4",      // wait HSYNC high to avoid re-triggering
         ".wrap",
     );
 
-    // POL: toggle every active line on DE falling edge (gpio 3).
+    // POL: 1-line inversion, toggled autonomously in hardware on the HSYNC falling edge
+    // (during blanking, while GOE blanks the gates), so the polarity flip never injects
+    // current into the rails mid-active-line — POL is static across the whole active line.
+    // DC balance / frame-to-frame alternation depends on v_total being ODD (527): an odd
+    // line count flips line 0's polarity every frame automatically. If the vertical porches
+    // are ever retimed to an even v_total, frame alternation breaks -> image retention.
+    // CPU stays asleep (no FIFO pushes -> no latency jitter). gpio 4 = HSYNC.
     let pol_prg = pio_asm!(
+        "set y, 0",
         ".wrap_target",
-        "wait 1 gpio 3",      // wait for DE high
-        "wait 0 gpio 3",      // wait for DE low
-        "set pins, 1",
-        "wait 1 gpio 3",
-        "wait 0 gpio 3",
-        "set pins, 0",
+        "wait 0 gpio 4",      // wait HSYNC low (line start / blanking starts)
+        "mov pins, y",        // set POL to current polarity
+        "mov y, ~y",          // toggle polarity
+        "wait 1 gpio 4",      // wait HSYNC high to avoid re-triggering
         ".wrap",
     );
 
@@ -204,7 +204,6 @@ async fn main(_spawner: Spawner) {
     let mut cfg_g = Config::default();
     cfg_g.use_program(&loaded_gspu, &[]);
     cfg_g.set_set_pins(&[&gspu_pin]);
-    cfg_g.set_jmp_pin(&vsync_pin);
     gspu_sm.set_config(&cfg_g);
     gspu_sm.set_pin_dirs(Direction::Out, &[&gspu_pin]);
     gspu_sm.set_enable(true);
@@ -219,12 +218,14 @@ async fn main(_spawner: Spawner) {
     let mut cfg_pol = Config::default();
     cfg_pol.use_program(&loaded_pol, &[]);
     cfg_pol.set_set_pins(&[&pol_pin]);
+    cfg_pol.set_out_pins(&[&pol_pin]);
     pol_sm.set_config(&cfg_pol);
     pol_sm.set_pin_dirs(Direction::Out, &[&pol_pin]);
     pol_sm.set_enable(true);
 
+    let mut _pin_vsync = embassy_rp::gpio::Input::new(p.PIN_9, embassy_rp::gpio::Pull::None);
     loop {
-        cortex_m::asm::wfi();
+        embassy_time::Timer::after_secs(3600).await;
     }
 }
 

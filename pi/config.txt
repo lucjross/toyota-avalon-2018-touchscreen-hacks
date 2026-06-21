@@ -57,7 +57,7 @@ overscan_bottom=0
 # thinner. This is the horizontal-margin knob — overscan scales (soft), porch/SSPL
 # tricks latch back-porch junk and break the vertical lock.
 framebuffer_width=776
-framebuffer_height=480
+framebuffer_height=468
 enable_dpi_lcd=1
 display_default_lcd=1
 dpi_group=2
@@ -91,7 +91,7 @@ dpi_output_format=0x30026
 #      porch (h_bp 87->88), which is after the HSYNC edge so HSYNC-vs-VSYNC phase is
 #      unchanged and the Pico vertical (GSPU) lock stays put. NEVER take it from h_fp /
 #      h_sync (h_active + h_fp = 840 must stay fixed, or the vertical lock breaks).
-hdmi_timings=800 0 40 48 88 480 0 42 3 2 0 0 0 60 0 33333000 6
+hdmi_timings=800 0 40 48 88 468 0 48 3 8 0 0 0 60 0 33333000 6
 
 [cm4]
 # Enable host mode on the 2711 built-in XHCI USB controller.
