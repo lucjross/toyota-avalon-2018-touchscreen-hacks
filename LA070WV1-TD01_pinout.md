@@ -9,68 +9,73 @@ config.txt (the dpi18 overlay alone only reaches GPIO21).
 U/D tied LOW → scan top-to-bottom, GSPU active, GSPD unused.
 L/R tied HIGH → scan left-to-right, SSPL active, SSPR unused.
 
-| Pin | Symbol | Description | Connect to |
-|-----|--------|-------------|------------|
-| 1 | VCOM | Color filter substrate voltage (4.0V typ) | TCON board |
-| 2 | VCOM | Color filter substrate voltage (4.0V typ) | TCON board |
-| 3 | GND | Ground | GND |
-| 4 | VGL | Gate driver negative voltage (-9.5V typ) | TCON board |
-| 5 | VGL | Gate driver negative voltage (-9.5V typ) | TCON board |
-| 6 | GSPU | Gate scan up start pulse | Pico GP10 (clean pulse from PIO1) |
-| 7 | U/D | Vertical scan direction (LOW = top-to-bottom) | GND (static LOW) |
-| 8 | GSC | Gate shift clock (~31.5 kHz) | Pico GP11 (clean clock from PIO1) |
-| 9 | GOE | Gate output enable (active-low) — MUST pulse per line, not static | Pico GP8 |
-| 10 | GSPD | Gate scan down start pulse (unused when U/D=LOW) | GND |
-| 11 | VST | Voltage for storage capacitor (0V) | GND |
-| 12 | GND | Ground | GND |
-| 13 | VGH | Gate driver positive voltage (+18.5V typ) | TCON board |
-| 14 | GND | Ground | GND |
-| 15 | SSPR | Source scan right start pulse (unused when L/R=HIGH) | NC |
-| 16 | DVDD | Logic supply 3.3V | Pi 3.3V |
-| 17 | DVDD | Logic supply 3.3V | Pi 3.3V |
-| 18 | DVDD | Logic supply 3.3V | Pi 3.3V |
-| 19 | GND | Ground | GND |
-| 20 | SSC | Source shift clock / pixel clock (33.26 MHz) | Pi GPIO 0 (PCLK) |
-| 21 | GND | Ground | GND |
-| 22 | GND | Ground | GND |
-| 23 | GND | Ground | GND |
-| 24 | AVDD | Source driver IC supply (10V typ) | TCON board |
-| 25 | AVDD | Source driver IC supply (10V typ) | TCON board |
-| 26 | POL | Polarity control (toggles each line) | Pico GP7 |
-| 27 | SOE | Source output enable — line latch strobe (NOT a level; ~2-clk pulse) | Pico GP5 |
-| 28 | L/R | Horizontal scan direction (HIGH = left-to-right) | DVDD / 3.3V (static HIGH) |
-| 29 | REV | Pixel data inversion (LOW = normal) | GND (static LOW) |
-| 30 | R5 | Red data 5 [MSB] | Pi GPIO 9 |
-| 31 | R4 | Red data 4 | Pi GPIO 8 |
-| 32 | R3 | Red data 3 | Pi GPIO 7 |
-| 33 | R2 | Red data 2 | Pi GPIO 6 |
-| 34 | R1 | Red data 1 | Pi GPIO 5 |
-| 35 | R0 | Red data 0 [LSB] | Pi GPIO 4 |
-| 36 | G5 | Green data 5 [MSB] | Pi GPIO 17 |
-| 37 | G4 | Green data 4 | Pi GPIO 16 |
-| 38 | G3 | Green data 3 | Pi GPIO 15 |
-| 39 | G2 | Green data 2 | Pi GPIO 14 |
-| 40 | G1 | Green data 1 | Pi GPIO 13 |
-| 41 | G0 | Green data 0 [LSB] | Pi GPIO 12 |
-| 42 | B5 | Blue data 5 [MSB] | Pi GPIO 25 |
-| 43 | B4 | Blue data 4 | Pi GPIO 24 |
-| 44 | B3 | Blue data 3 | Pi GPIO 23 |
-| 45 | B2 | Blue data 2 | Pi GPIO 22 |
-| 46 | B1 | Blue data 1 | Pi GPIO 21 |
-| 47 | B0 | Blue data 0 [LSB] | Pi GPIO 20 |
-| 48 | VREF10 | Gamma correction voltage (0.7V) | Resistor ladder |
-| 49 | VREF9 | Gamma correction voltage (1.0V) | Resistor ladder |
-| 50 | VREF8 | Gamma correction voltage (2.78V) | Resistor ladder |
-| 51 | VREF7 | Gamma correction voltage (3.82V) | Resistor ladder |
-| 52 | VREF6 | Gamma correction voltage (4.77V) | Resistor ladder |
-| 53 | VREF5 | Gamma correction voltage (5.42V) | Resistor ladder |
-| 54 | VREF4 | Gamma correction voltage (6.24V) | Resistor ladder |
-| 55 | VREF3 | Gamma correction voltage (7.13V) | Resistor ladder |
-| 56 | VREF2 | Gamma correction voltage (8.8V) | Resistor ladder |
-| 57 | VREF1 | Gamma correction voltage (9.1V) | Resistor ladder |
-| 58 | GND | Ground | GND |
-| 59 | SSPL | Source scan left start pulse | Pico GP6 |
-| 60 | GND | Ground | GND |
+**Ribbon mounted reversed:** the panel ribbon is plugged into the FPC-60 adapter
+backwards, so the adapter position you actually wire to is `61 − panel_pin`. The
+**Adapter Pin** column gives that reversed number — to reach a panel function, wire
+to its Adapter Pin, not its native Pin.
+
+| Pin | Adapter Pin | Symbol | Description | Connect to |
+|-----|-------------|--------|-------------|------------|
+| 1 | 60 | VCOM | Color filter substrate voltage (4.0V typ) | TCON board |
+| 2 | 59 | VCOM | Color filter substrate voltage (4.0V typ) | TCON board |
+| 3 | 58 | GND | Ground | GND |
+| 4 | 57 | VGL | Gate driver negative voltage (-9.5V typ) | TCON board |
+| 5 | 56 | VGL | Gate driver negative voltage (-9.5V typ) | TCON board |
+| 6 | 55 | GSPU | Gate scan up start pulse | Pico GP10 (clean pulse from PIO1) |
+| 7 | 54 | U/D | Vertical scan direction (LOW = top-to-bottom) | GND (static LOW) |
+| 8 | 53 | GSC | Gate shift clock (~31.5 kHz) | Pico GP11 (clean clock from PIO1) |
+| 9 | 52 | GOE | Gate output enable (active-low) — MUST pulse per line, not static | Pico GP8 |
+| 10 | 51 | GSPD | Gate scan down start pulse (unused when U/D=LOW) | GND |
+| 11 | 50 | VST | Voltage for storage capacitor (0V) | GND |
+| 12 | 49 | GND | Ground | GND |
+| 13 | 48 | VGH | Gate driver positive voltage (+18.5V typ) | TCON board |
+| 14 | 47 | GND | Ground | GND |
+| 15 | 46 | SSPR | Source scan right start pulse (unused when L/R=HIGH) | NC |
+| 16 | 45 | DVDD | Logic supply 3.3V | Pi 3.3V |
+| 17 | 44 | DVDD | Logic supply 3.3V | Pi 3.3V |
+| 18 | 43 | DVDD | Logic supply 3.3V | Pi 3.3V |
+| 19 | 42 | GND | Ground | GND |
+| 20 | 41 | SSC | Source shift clock / pixel clock (33.26 MHz) | Pi GPIO 0 (PCLK) |
+| 21 | 40 | GND | Ground | GND |
+| 22 | 39 | GND | Ground | GND |
+| 23 | 38 | GND | Ground | GND |
+| 24 | 37 | AVDD | Source driver IC supply (10V typ) | TCON board |
+| 25 | 36 | AVDD | Source driver IC supply (10V typ) | TCON board |
+| 26 | 35 | SOE | Source output enable — line latch strobe (NOT a level; ~2-clk pulse). **FPC26 is SOE, not POL** — verified empirically (SOE here = correct black; POL here = washed-out). | Pico GP5 |
+| 27 | 34 | POL | Polarity control (toggles each line). **FPC27 is POL, not SOE.** | Pico GP7 |
+| 28 | 33 | L/R | Horizontal scan direction (HIGH = left-to-right) | DVDD / 3.3V (static HIGH) |
+| 29 | 32 | REV | Pixel data inversion (LOW = normal) | GND (static LOW) |
+| 30 | 31 | R5 | Red data 5 [MSB] | Pi GPIO 9 |
+| 31 | 30 | R4 | Red data 4 | Pi GPIO 8 |
+| 32 | 29 | R3 | Red data 3 | Pi GPIO 7 |
+| 33 | 28 | R2 | Red data 2 | Pi GPIO 6 |
+| 34 | 27 | R1 | Red data 1 | Pi GPIO 5 |
+| 35 | 26 | R0 | Red data 0 [LSB] | Pi GPIO 4 |
+| 36 | 25 | G5 | Green data 5 [MSB] | Pi GPIO 17 |
+| 37 | 24 | G4 | Green data 4 | Pi GPIO 16 |
+| 38 | 23 | G3 | Green data 3 | Pi GPIO 15 |
+| 39 | 22 | G2 | Green data 2 | Pi GPIO 14 |
+| 40 | 21 | G1 | Green data 1 | Pi GPIO 13 |
+| 41 | 20 | G0 | Green data 0 [LSB] | Pi GPIO 12 |
+| 42 | 19 | B5 | Blue data 5 [MSB] | Pi GPIO 25 |
+| 43 | 18 | B4 | Blue data 4 | Pi GPIO 24 |
+| 44 | 17 | B3 | Blue data 3 | Pi GPIO 23 |
+| 45 | 16 | B2 | Blue data 2 | Pi GPIO 22 |
+| 46 | 15 | B1 | Blue data 1 | Pi GPIO 21 |
+| 47 | 14 | B0 | Blue data 0 [LSB] | Pi GPIO 20 |
+| 48 | 13 | VREF10 | Gamma correction voltage (0.7V) | Resistor ladder |
+| 49 | 12 | VREF9 | Gamma correction voltage (1.0V) | Resistor ladder |
+| 50 | 11 | VREF8 | Gamma correction voltage (2.78V) | Resistor ladder |
+| 51 | 10 | VREF7 | Gamma correction voltage (3.82V) | Resistor ladder |
+| 52 | 9 | VREF6 | Gamma correction voltage (4.77V) | Resistor ladder |
+| 53 | 8 | VREF5 | Gamma correction voltage (5.42V) | Resistor ladder |
+| 54 | 7 | VREF4 | Gamma correction voltage (6.24V) | Resistor ladder |
+| 55 | 6 | VREF3 | Gamma correction voltage (7.13V) | Resistor ladder |
+| 56 | 5 | VREF2 | Gamma correction voltage (8.8V) | Resistor ladder |
+| 57 | 4 | VREF1 | Gamma correction voltage (9.1V) | Resistor ladder |
+| 58 | 3 | GND | Ground | GND |
+| 59 | 2 | SSPL | Source scan left start pulse | Pico GP6 |
+| 60 | 1 | GND | Ground | GND |
 
 ## TCON: Raspberry Pi Pico (RP2040)
 
@@ -82,12 +87,12 @@ straight from the Pi (HSYNC/VSYNC). Code: `pico_tcon/`.
 |---------|----------|-----|-------------|---------|
 | GP2 | 4 | in | Pi PCLK net (SSC) | pixel-clock reference |
 | GP3 | 5 | in | Pi DE net (Pi phys pin 28) | line-start / line-end reference |
-| GP4 | 6 | in | Pi HSYNC (Pi phys pin 3) | POL divider reference |
-| GP5 | 7 | out | FPC 27 (SOE) | ~2-clk latch pulse at DE falling edge |
+| GP4 | 6 | in | Pi HSYNC = GPIO3, **Pi phys pin 5** | POL divider reference |
+| GP5 | 7 | out | FPC 26 (SOE) | ~2-clk latch pulse at DE falling edge |
 | GP6 | 9 | out | FPC 59 (SSPL) | ~1-clk start pulse at DE rising edge |
-| GP7 | 10 | out | FPC 26 (POL) | toggle per line (HSYNC ÷ 2) |
+| GP7 | 10 | out | FPC 27 (POL) | toggle per line (HSYNC ÷ 2) |
 | GP8 | 11 | out | FPC 9 (GOE) | gate output enable, brief high blank pulse per line |
-| GP9 | 12 | in | Pi VSYNC (Pi pin 5) | frame reference for GSPU |
+| GP9 | 12 | in | Pi VSYNC = GPIO2, **Pi phys pin 3** | frame reference for GSPU |
 | GP10 | 14 | out | FPC 6 (GSPU) | clean 1-token gate start pulse per frame (PIO1) |
 | GP11 | 15 | out | FPC 8 (GSC) | gate clock, one clean mid-line advance edge per line (PIO1) |
 | GND | 3 or 8 | — | common ground | must tie to Pi/panel GND |
@@ -112,8 +117,8 @@ only handles the touchscreen (GOE is tied to GND for always-enabled gate output)
 |----------|-------------|-------------|---------|
 | 0 | 27 (ID_SD) | PCLK | FPC 20 (SSC), also → Pico GP2 |
 | 1 | 28 (ID_SC) | DE | → Pico GP3 (no longer to FPC 27) |
-| 2 | 3 | HSYNC | → Pico GP4 only (Pico generates GSC → FPC 8) |
-| 3 | 5 | VSYNC | → Pico GP9 (Pico generates GSPU → FPC 6) |
+| 2 | 3 | VSYNC | → Pico GP9 (Pico generates GSPU → FPC 6) |
+| 3 | 5 | HSYNC | → Pico GP4 (Pico generates GSC → FPC 8) |
 | 4 | 7 | R0 | 35 |
 | 5 | 29 | R1 | 34 |
 | 6 | 31 | R2 | 33 |
@@ -132,18 +137,19 @@ only handles the touchscreen (GOE is tied to GND for always-enabled gate output)
 | 23 | 16 | B3 | 44 |
 | 24 | 18 | B4 | 43 |
 | 25 | 22 | B5 | 42 |
-| 26 | 37 | Backlight enable → YS-DZ-3.1 Blue | — |
+| 26 | 37 | Backlight enable (driven high) | — |
+| 18 | 12 | Reset Button (input) | — |
+| 19 | 35 | 12V MOSFET switch (driven high) | — |
+| 27 | 13 | Stuck RGB trace conflict (set to ALT2 `a2`) | — |
+| 10 | 19 | Unused DPI pad bit | — |
+| 11 | 23 | Unused DPI pad bit | — |
 
-GPIO 10, 11, 18, 19 are unused DPI pad bits — no color data, NOT wired to the panel, so
-they are free for other uses. Note: the `dpi18` overlay claims GPIO 0–21, so the
-`gpio=10-11=ip`/`gpio=18-19=ip` lines in config.txt are no-ops (the pins read `a2` at
-boot); to actually use one, re-mux it away from DPI at runtime (`pinctrl set <pin> ...`)
-or from your program — harmless to the display since nothing is connected. Usable as:
-GPIO 18 (pin 12) and 19 (pin 35) = **hardware PWM0/PWM1** or GPIO; GPIO 10 (pin 19) and
-11 (pin 23) = plain GPIO only (SPI0 is blocked — it needs GPIO 8/9 = R4/R5). GPIO 26
-(backlight) and 27 are outside the overlay range and stay free by default.
-GPIO 14/15 are also the UART (TXD/RXD); the serial console must stay disabled
-(no `console=serial0` in cmdline.txt) or it fights green data.
+GPIO 10, 11 are unused DPI pad bits — no color data, NOT wired to the panel.
+GPIO 18 (physical pin 12) is used as the Reset Button (configured as input `ip` to prevent shorting).
+GPIO 19 (physical pin 35) controls the NPN transistor for the load-side 12V MOSFET switch (configured as output driven-high `op,dh`).
+GPIO 27 (physical pin 13) has a physical trace conflict routing it to an RGB pin on the display; it must be configured in ALT2 mode (`a2,np`) to prevent color channel wash-out.
+Note: the `dpi18` overlay claims GPIO 0–21, so BCM 18 and 19 read `a2` at boot. Setting BCM 19 high requires re-muxing it to GPIO at runtime (`pinctrl set 19 op dh` or from a startup script). This is harmless to the display since nothing is connected on pin 35. BCM 18 is re-muxed back to input (`pinctrl set 18 ip`) to act as the reset button.
+GPIO 14/15 are also the UART (TXD/RXD); the serial console must stay disabled (no `console=serial0` in cmdline.txt) or it fights green data.
 
 ## VREF Gamma Resistor Ladder
 

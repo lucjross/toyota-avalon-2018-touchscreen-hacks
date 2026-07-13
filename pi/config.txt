@@ -118,5 +118,7 @@ gpio=4-9=a2,np
 gpio=12-17=a2,np
 gpio=20-25=a2,np
 gpio=10-11=ip
-gpio=18-19=ip
-gpio=26-27=ip
+gpio=18=ip
+gpio=19=op,dh
+gpio=26=op,dh
+gpio=27=a2,np

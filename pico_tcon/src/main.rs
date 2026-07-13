@@ -30,6 +30,9 @@ async fn main(_spawner: Spawner) {
 
     // Inputs from Pi: GP2=SSC, GP3=DE, GP4=HSYNC.
     // Outputs: GP5=SOE, GP6=SSPL, GP8=GOE.
+    // Verified wiring: GP5 -> FPC26 (SOE), GP7 -> FPC27 (POL). The panel's FPC26 is the
+    // SOE input and FPC27 is POL — TRANSPOSED from the old doc labels (26=POL/27=SOE).
+    // Putting SOE on FPC26 is what makes black render correctly; otherwise it washes out.
     let _ssc = common.make_pio_pin(p.PIN_2);
     let _de = common.make_pio_pin(p.PIN_3);
     let _hsync = common.make_pio_pin(p.PIN_4);
@@ -51,10 +54,7 @@ async fn main(_spawner: Spawner) {
         "set x, 7",           // 8 inner loops
         "sspl_x:",
         "jmp x-- sspl_x [4]", // 5 cycles per inner loop. 5 * 8 = 40 cycles.
-        "jmp y-- sspl_y",     // 1 cycle. Total = 8 * 41 = 328 system clock cycles (~2.63us)
-                              // matches h_bp=88 (htotal=976). GSC runs 34.15kHz (slightly over
-                              // the 31.2-31.8kHz spec) but ran clean; htotal=1056 fixed the
-                              // spec but reintroduced horizontal waviness, so reverted.
+        "jmp y-- sspl_y [1]", // 2 cycles per outer loop -> ~344 cycles. Tuned for correct horizontal position; keep.
         "wait 0 gpio 2",      // wait for SSC low
         "wait 1 gpio 2",      // wait for SSC high (align to clock edge)
         "set pins, 1",        // set SSPL high
@@ -134,7 +134,7 @@ async fn main(_spawner: Spawner) {
 
     let gspu_pin = common1.make_pio_pin(p.PIN_10);
     let gsc_pin = common1.make_pio_pin(p.PIN_11);
-    let pol_pin = common1.make_pio_pin(p.PIN_7);
+    let pol_pin = common1.make_pio_pin(p.PIN_7); // GP7 -> FPC27 (POL)
 
     // GSPU: one clean token per frame. At the frame's VSYNC, skip one HSYNC
     // edge (so GSPU is high a full line before it loads — far exceeds the 200ns
@@ -176,7 +176,10 @@ async fn main(_spawner: Spawner) {
     "gsc_delay:",
         "jmp x-- gsc_delay [1]",
         "set pins, 1",        // GSC high: row advance during blanking
-        "wait 1 gpio 4",      // wait HSYNC high to avoid re-triggering
+        "wait 1 gpio 4",      // wait HSYNC high
+        "set x, 15",          // ~240ns debounce after HSYNC rising. REQUIRED: without it GSC
+    "gsc_debounce:",          // re-triggers on HSYNC glitches -> gate advances multiple times
+        "jmp x-- gsc_debounce [1]", // per line -> scan runs too fast -> image repeats in vertical thirds.
         ".wrap",
     );
 
