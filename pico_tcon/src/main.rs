@@ -30,9 +30,6 @@ async fn main(_spawner: Spawner) {
 
     // Inputs from Pi: GP2=SSC, GP3=DE, GP4=HSYNC.
     // Outputs: GP5=SOE, GP6=SSPL, GP8=GOE.
-    // Verified wiring: GP5 -> FPC26 (SOE), GP7 -> FPC27 (POL). The panel's FPC26 is the
-    // SOE input and FPC27 is POL — TRANSPOSED from the old doc labels (26=POL/27=SOE).
-    // Putting SOE on FPC26 is what makes black render correctly; otherwise it washes out.
     let _ssc = common.make_pio_pin(p.PIN_2);
     let _de = common.make_pio_pin(p.PIN_3);
     let _hsync = common.make_pio_pin(p.PIN_4);
@@ -40,27 +37,30 @@ async fn main(_spawner: Spawner) {
     let sspl_pin = common.make_pio_pin(p.PIN_6);
     let goe_pin = common.make_pio_pin(p.PIN_8);
 
-    // SSPL: ~1-SSC-clock start pulse at DE rising edge (first active pixel).
-    // To eliminate high-frequency pixel clock noise/ringing issues, we wait for
-    // the HSYNC rising edge (end of sync pulse, start of back porch), delay using
-    // a rock-solid system-clock loop, and wait for a single SSC transition at the end.
-    // gpio 4 = HSYNC, gpio 2 = SSC.
+    // SSPL: ~1-SSC start pulse, one per line. Trigger on the HSYNC rising edge
+    // (back porch start) and run a system-clock delay (~344 cyc) to reach the first
+    // active pixel — htotal÷4 phase-locks this delay to SSC, so it does NOT drift.
+    // Then fire the rising edge DIRECTLY, with NO SSC-align before it.
+    //
+    // The SSC-align is deliberately omitted: a "wait gpio 2" before the rising edge
+    // resolves the DE/SSC coincidence ±1 differently each line, which is what caused
+    // the horizontal shimmer. Firing directly off the phase-locked delay is both
+    // centered and jitter-free. (Post-rising waits are fine — they only set the pulse
+    // width, not its position.) gpio 4 = HSYNC, gpio 2 = SSC.
     let sspl_prg = pio_asm!(
         ".wrap_target",
         "wait 0 gpio 4",      // wait for HSYNC low
-        "wait 1 gpio 4",      // wait for HSYNC high (back porch start)
+        "wait 1 gpio 4",      // HSYNC high (back porch start)
         "set y, 7",           // 8 outer loops
         "sspl_y:",
         "set x, 7",           // 8 inner loops
         "sspl_x:",
-        "jmp x-- sspl_x [4]", // 5 cycles per inner loop. 5 * 8 = 40 cycles.
-        "jmp y-- sspl_y [1]", // 2 cycles per outer loop -> ~344 cycles. Tuned for correct horizontal position; keep.
-        "wait 0 gpio 2",      // wait for SSC low
-        "wait 1 gpio 2",      // wait for SSC high (align to clock edge)
-        "set pins, 1",        // set SSPL high
-        "wait 0 gpio 2",
-        "wait 1 gpio 2",      // wait 1 SSC clock
-        "set pins, 0",        // set SSPL low
+        "jmp x-- sspl_x [4]", // 5 cycles per inner loop
+        "jmp y-- sspl_y [1]", // ~344 cycles total -> lands ~at DE (centered)
+        "set pins, 1",        // fire DIRECTLY — no SSC-align (the jitter source)
+        "wait 0 gpio 2",      // hold ~one SSC period (post-rising waits are safe)
+        "wait 1 gpio 2",
+        "set pins, 0",        // SSPL low
         ".wrap",
     );
 
@@ -134,7 +134,7 @@ async fn main(_spawner: Spawner) {
 
     let gspu_pin = common1.make_pio_pin(p.PIN_10);
     let gsc_pin = common1.make_pio_pin(p.PIN_11);
-    let pol_pin = common1.make_pio_pin(p.PIN_7); // GP7 -> FPC27 (POL)
+    let pol_pin = common1.make_pio_pin(p.PIN_7);
 
     // GSPU: one clean token per frame. At the frame's VSYNC, skip one HSYNC
     // edge (so GSPU is high a full line before it loads — far exceeds the 200ns
@@ -189,7 +189,6 @@ async fn main(_spawner: Spawner) {
     // DC balance / frame-to-frame alternation depends on v_total being ODD (527): an odd
     // line count flips line 0's polarity every frame automatically. If the vertical porches
     // are ever retimed to an even v_total, frame alternation breaks -> image retention.
-    // CPU stays asleep (no FIFO pushes -> no latency jitter). gpio 4 = HSYNC.
     let pol_prg = pio_asm!(
         "set y, 0",
         ".wrap_target",

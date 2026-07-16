@@ -16,3 +16,9 @@ __pycache__/
 # Rust build artifacts
 target/
 pico_tcon/target/
+
+# IDE
+.idea/
+
+# Build/flash logs
+errors.log

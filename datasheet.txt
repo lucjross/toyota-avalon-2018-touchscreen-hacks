@@ -1,0 +1,3357 @@
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+SPECIFICATION
+FOR
+APPROVAL
+
+( ) Preliminary Specification
+( ̻ ) Final Specification
+
+7.0”W (800 X RGB X 480) TFT- LCD
+
+Title
+BUYER
+
+SUPPLIER
+
+LG Display CO.,Ltd.
+
+MODEL
+
+MODEL
+
+LA070WV1
+
+SUFFIX
+
+TD01
+
+SIGNATURE
+
+APPROVED BY
+
+DATE
+
+DATE
+
+J. D. Kim / Chief Engineer
+/
+REVIEWED BY
+/
+
+J.H Hwang / Senior Engineer
+PREPARED BY
+
+/
+Y.B Park / Engineer
+
+Product Engineering Dept.
+LG Display Co., Ltd
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+0 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+Contents
+No.
+
+Ver. 1.0
+
+Item
+
+Page
+
+Record of Revisions
+
+2
+
+1
+
+Summary
+
+3
+
+2
+
+Features
+
+3
+
+3
+
+General Specification
+
+4
+
+4
+
+Pin Configuration
+
+5
+
+4-1
+
+FPC Pin Configuration
+
+5
+
+4-2
+
+Backlight LED FPC Pin Configuration
+
+7
+
+5
+
+Absolute Maximum Ratings
+
+8
+
+6
+
+Electrical Specification
+
+9
+
+6-1
+
+Electrical Characteristics
+
+9
+
+6-2
+
+Power On/Off Sequence
+
+11
+
+6-3
+
+LED Characteristics
+
+13
+
+6-4
+
+Timing Characteristics of Input Signals
+
+14
+
+7
+
+Electro-optical Characteristics
+
+17
+
+8
+
+Mechanical Characteristics
+
+20
+
+9
+
+Reliability Test
+
+23
+
+10
+
+International Standards
+
+24
+
+10-1
+
+Safety
+
+24
+
+10-2
+
+EMC
+
+24
+
+10-3
+
+Environment
+
+24
+
+11
+
+Packing
+
+25
+
+11-1
+
+Designation of Lot Mark
+
+25
+
+11-2
+
+Packing Form
+
+26
+
+12
+
+PRECAUTIONS
+
+27
+
+13
+
+Production Center
+
+28
+
+Oct. 26. 2010
+
+1 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+Record of Revisions
+Revision No.
+
+Revision Date
+
+Page
+
+0.0
+
+Dec.18. 2009
+
+-
+
+0.1
+
+Mar.31.2010
+
+0.2
+
+Jun.30.2010
+
+Description
+
+Note
+
+First Draft (Preliminary)
+Model name : LA070WV5 Æ LA070WV1
+
+Change
+
+7
+
+FPC Pin Symbol, Description : Anode1,2->Anode
+Cathode1,2->Cathode
+
+Change
+
+11~
+13
+
+Power sequence is updated
+
+Change
+
+14
+
+LED Chain(2->1), Current ,Voltage ,Power
+
+Change
+
+4,21
+
+Weight Spec.
+
+22,
+23
+
+Drawing
+1) B/L Label Position
+2) LED FPC Pin Map (Detail “B”)
+: Anode1,2->Anode / Cathode1,2->Cathode
+3) System assembly hole (Detail “C”)
+
+Change
+
+7
+
+Backlight LED FPC Pin Configuration
+: Pin No.2,4 Æ N.C
+
+Change
+
+9,10
+
+Electrical Characteristics are updated
+: Current, Gamma correction voltage
+
+Change
+
+11,12
+
+Power Sequence is updated
+
+Change
+
+13
+
+LED Characteristics : ILED 55mA Æ 65mA
+
+Change
+
+17
+
+Luminance : 500 Æ 550
+
+Change
+
+17
+
+Color Coordinates are changed
+
+Change
+
+20
+
+Tolerances are added
+
+22
+
+Drawing
+1) LED FPC Length & Position
+2) Main FPC Bending Position
+
+Change
+
+Add
+
+Add
+
+0.3
+
+Aug.26.2010
+
+9
+
+VGL is changed : -7V·0.5V Æ -9.5V·0.5V
+IVGL is changed : 0.25mA Æ 0.30mA
+
+Change
+
+1.0
+
+Oct.26.2010
+
+9
+
+VCOM min. value changed : 3.9V Æ 3.8V
+VCOM typ. value changed : 4.2V Æ 4.0V
+
+Change
+
+10
+
+Added [Notes 6-1.5] VCOM adjustment
+
+Change
+
+22
+
+Drawing
+1) Delete reference stamping for the LED FPC
+assembly
+2) Change the position of B/L Label
+3) Change the size of LED FPC cover shield
+4) Change the shape of FPC cover shield
+
+Change
+
+23
+
+Changed [Notes 9-2] : Result Evaluation Criteria
+
+Change
+
+23
+
+Added [Notes 9-4] : C/T & Indeterminate Mura
+Guarantee temperature
+
+Add
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+2 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+1. Summary
+This module utilizes amorphous silicon thin film transistors and a 17.07:9 aspect ratio. A 6.95” active
+matrix liquid crystal display allows 262,144 colors to be displayed.
+The applications are Car Navigation System, Amusement and others AV system.
+
+2. Features
+• Utilizes a panel with a 17.07:9 aspect ratio, which makes the module suitable for use in wide-screen
+systems.
+• The 6.95” screen produces a high resolution image that is composed of 384,000 pixel elements in a stripe
+arrangement.
+• Wide viewing angle technology is employed.
+[The most suitable viewing direction is in the 6 o’clock direction.]
+• By adopting an active matrix drive, a picture with high contrast is realized.
+• A thin, light and compact module is accomplished through the use of COG mounting technology.
+• By adopting a high aperture panel, high transmittance color filter and high transmission polarizing plates,
+transmittance ratio is realized.
+• Gray scale or the brightness of the sub-pixel color is determined with a 6-bit gray scale signal.
+
+ऌऋओँऎ
+ࣤऀऒऀऀࣨࣽऒऀऀࣨऒःऄࣨࣜ
+ऒःईࣨऒࣿऋउࣨःऊऀࣥ
+
+FPC
+
+Row Driver (COG)
+
+ऀअएऌईࣽकࣜऀࣽऐࣽࣜ࣢
+ऐअउअऊःࣜएअःऊࣽई
+
+TFT-LCD
+( 800 x RGB x 480 )
+
+Column Driver (COG)
+
+CN1
+
+Backlight Assembly
+
+ऀअएऌईࣽकࣜऀࣽऐࣽࣜ࣢
+ऐअउअऊःࣜएअःऊࣽई
+
+Ver. 1.0
+
+ऌऋओँऎ
+
+Oct. 26. 2010
+
+3 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+3. General Specification
+Characteristic Item
+
+Specification
+
+Input Signal Type
+
+Digital, RGB (6bit)
+
+Display Mode
+
+Normally White, Transmitting Type
+
+Screen Size (Diagonal)
+
+6.95”(176.574mm)
+
+Aspect Ratio
+
+17.07:9
+
+Outline Dimension (W x H x D)
+
+167.0mm (H) X 93.0mm (V) X 6.8mm (D)
+
+Active Area
+
+156.24(H) [mm] X 82.368(V) [mm] (Typ.)
+
+Number Of dots
+
+800(H) X 3(R, G, B) X 480(V)
+
+Dot Pitch
+
+0.0651(W) [mm] X 0.1716(H) [mm]
+
+Color Depth
+
+6 Bit, 262,144 Colors
+
+Pixel Pitch
+
+0.1953mm(H) Ý 0.1716mm(V)
+
+Color Filter Array
+
+RGB vertical stripes
+
+Weight
+
+150g(Typ.) 160g ( Max.)
+
+Backlight
+
+LED
+
+Surface Treatment
+
+Ver. 1.0
+
+Anti-Glare Treatment
+
+Oct. 26. 2010
+
+4 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+4. Pin Configuration
+4-1. FPC Pin Configuration
+Pin
+
+Symbol
+
+Description
+
+1
+
+VCOM
+
+Voltage Applied To Color Filter Substrate
+
+2
+
+VCOM
+
+Voltage Applied To Color Filter Substrate
+
+3
+
+GND
+
+Ground
+
+4
+
+VGL
+
+Gate Driver Negative Voltage
+
+5
+
+VGL
+
+Gate Driver Negative Voltage
+
+6
+
+GSPU
+
+Gate Scanning Up Start Signal
+
+4-1.1
+
+7
+
+U/D
+
+Vertical Scan Direction Control
+
+4-1.1
+
+8
+
+GSC
+
+Gate Driver Scanning Clock pulse
+
+9
+
+GOE
+
+Gate Driver Output Enable Control
+
+10
+
+GSPD
+
+Gate Scanning Down Start Signal
+
+11
+
+VST
+
+Voltage for Storage capacitor
+
+12
+
+GND
+
+Ground
+
+13
+
+VGH
+
+Gate Driver Positive Voltage
+
+14
+
+GND
+
+Ground
+
+15
+
+SSPR
+
+Source Scanning Right Start Signal
+
+16
+
+DVDD
+
+Power For Logic (3.3V)
+
+17
+
+DVDD
+
+Power For Logic (3.3V)
+
+18
+
+DVDD
+
+Power For Logic (3.3V)
+
+19
+
+GND
+
+Ground
+
+20
+
+SSC
+
+Source Driver Clock Input
+
+21
+
+GND
+
+Ground
+
+22
+
+GND
+
+Ground
+
+23
+
+GND
+
+Ground
+
+24
+
+AVDD
+
+Power for Source Driver IC
+
+25
+
+AVDD
+
+Power for Source Driver IC
+
+26
+
+POL
+
+Polarity Control Signal
+
+27
+
+SOE
+
+Source Driver Output Enable Control
+
+28
+
+L/R
+
+Horizontal Scan Direction Control
+
+29
+
+REV
+
+Pixel Data Inversion Signal
+
+30
+
+R5
+
+Red Data 5 [MSB]
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+Notes
+
+4-1.1
+
+4-1.1
+
+4-1.1
+
+5 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+Pin
+
+Symbol
+
+Description
+
+31
+
+R4
+
+Red Data 4
+
+32
+
+R3
+
+Red Data 3
+
+33
+
+R2
+
+Red Data 2
+
+34
+
+R1
+
+Red Data 1
+
+35
+
+R0
+
+Red Data 0 [LSB]
+
+36
+
+G5
+
+Green Data 5 [MSB]
+
+37
+
+G4
+
+Green Data 4
+
+38
+
+G3
+
+Green Data 3
+
+39
+
+G2
+
+Green Data 2
+
+40
+
+G1
+
+Green Data 1
+
+41
+
+G0
+
+Green Data 0 [LSB]
+
+42
+
+B5
+
+Blue Data 5 [MSB]
+
+43
+
+B4
+
+Blue Data 4
+
+44
+
+B3
+
+Blue Data 3
+
+45
+
+B2
+
+Blue Data 2
+
+46
+
+B1
+
+Blue Data 1
+
+47
+
+B0
+
+Blue Data 0 [LSB]
+
+48
+
+VREF10
+
+Voltage for Gamma Correction
+
+49
+
+VREF9
+
+Voltage for Gamma Correction
+
+50
+
+VREF8
+
+Voltage for Gamma Correction
+
+51
+
+VREF7
+
+Voltage for Gamma Correction
+
+52
+
+VREF6
+
+Voltage for Gamma Correction
+
+53
+
+VREF5
+
+Voltage for Gamma Correction
+
+54
+
+VREF4
+
+Voltage for Gamma Correction
+
+55
+
+VREF3
+
+Voltage for Gamma Correction
+
+56
+
+VREF2
+
+Voltage for Gamma Correction
+
+57
+
+VREF1
+
+Voltage for Gamma Correction
+
+58
+
+GND
+
+Ground
+
+59
+
+SSPL
+
+Source Scanning Left Start Signal
+
+60
+
+GND
+
+Ground
+
+Notes
+
+4-1.1
+
+* Input connector for the operation : GF05A-60S-AF manufactured by LS Cable or equivalent.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+6 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+[Note 4-1.1] Detail Description of Pin Functions
+1. U_D is used as input pin for the vertical scanning direction. If U_D is ‘H’, GSPD is the Input Pin for
+the Gate Start Pulse (GSP). If U_D is ‘L’, GSPU is the Input Pin for the Gate Start Pulse (GSP).
+
+U_D
+
+Output Shift
+
+GSP Input Pin
+
+Notes
+
+L
+
+From Up to Down
+
+GSPU
+
+(A)
+
+H
+
+From Down to UP
+
+GSPD
+
+(B)
+
+2. L_R is used as input pin for the horizontal scanning direction. If L_R is ‘H’, SSPL is the Input Pin for
+the Source Start Pulse (SSP). If L_R is ‘L’, SSPR is the Input Pin for the Source Start Pulse (SSP).
+
+L_R
+
+Scanning Direction
+
+SSP Input Pin
+
+Notes
+
+H
+
+From Left to Right
+
+SSPL
+
+(A)
+
+L
+
+From Right to Left
+
+SSPR
+
+(B)
+
+(A)
+
+(B)
+
+4-2. Backlight LED FPC Pin Configuration
+Pin
+
+Symbol
+
+Description
+
+1
+
+A
+
+Anode
+
+2
+
+N.C
+
+No Connection
+
+3
+
+N.C
+
+No Connection
+
+4
+
+N.C
+
+No Connection
+
+5
+
+C
+
+Cathode
+
+6
+
+N.C
+
+No Connection
+
+7
+
+N.C
+
+No Connection
+
+8
+
+N.C
+
+No Connection
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+Notes
+
+7 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+5. Absolute Maximum Ratings
+
+Parameter
+
+Symbol
+
+Min.
+
+Max.
+
+Unit
+
+Notes
+
+Logic Voltage
+
+DVDD
+
+-0.3
+
+5
+
+V
+
+Logic Input Voltage
+
+VLogic
+(Logic Input)
+
+-0.3
+
+DVDD+0.3
+
+V
+
+VGMA
+(Vref 1~5)
+
+0.4AVDD
+
+AVDD+0.3
+
+VGMA
+(Vref 6~10)
+
+-0.3
+
+0.6AVDD
+
+V
+
+AVDD
+
+-0.3
+
+13.5
+
+V
+
+VGH-VGL
+
+-0.3
+
+40
+
+V
+
+VGL
+
+-20
+
+0.3
+
+V
+
+Storage Temperature
+
+Ta
+
+-40
+
+85
+
+୅
+
+5-2,3
+
+Operating Temperature
+
+Tp
+
+-30
+
+85
+
+୅
+
+5-2,3,4
+
+5-1
+
+Gamma Reference Voltage
+
+Source Driver Voltage
+
+Gate Driver Voltage
+
+[Note 5-1] GSC, GSPU, GSPD, U/D, GOE, SSC, SSPL, SSPR, REV, L/R, SOE, POL
+[Note 5-2] This rating applies to all parts of the module and should not be exceeded.
+[Note 5-3] Maximum wet-bulb temperature is 58୅. Condensation of dew must be avoided as electrical
+current leaks will occur, causing a degradation of performance specifications.
+[Note 5-4] The operating temperature only guarantees operation of the LCM and doesn’t guarantee all the
+contents of Electro-optical specification.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+8 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+6. Electrical Specification
+6-1. Electrical Characteristics
+
+Ta=25୅
+
+Parameter
+
+Symbol
+
+Min.
+
+Typ.
+
+Max.
+
+Unit
+
+Logic Supply Voltage
+
+DVDD
+
+3.0
+
+3.3
+
+3.6
+
+V
+
+High Level
+
+VIH
+
+0.7DVDD
+
+-
+
+DVDD
+
+V
+
+Low Level
+
+VIL
+
+0
+
+-
+
+0.3DVDD
+
+V
+
+Supply Voltage
+
+AVDD
+
+8.0
+
+10.0
+
+12.0
+
+V
+
+Gamma Correction
+Voltage
+
+VREF
+
+GND+0.1
+
+-
+
+AVDD-0.1
+
+V
+
+Hi
+
+VGH
+
+17.0
+
+18.5
+
+20.0
+
+V
+
+Lo
+
+VGL
+
+-10.0
+
+-9.5
+
+-9.0
+
+V
+
+Voltage
+Difference
+
+VGHVGL
+
+12.0
+
+-
+
+40.0
+
+V
+
+Logic Supply Voltage
+
+DVDD
+
+3.0
+
+3.3
+
+3.6
+
+V
+
+Voltage for storage capacitor
+
+VST
+
+-
+
+0
+
+-
+
+Vdc
+
+Color Filter Substrate Voltage
+
+VCOM
+
+3.8
+
+4.0
+
+4.5
+
+V
+
+6-1.5
+
+DVDD, AVDD, VREF,
+VGH,
+VGL, VST, VCOM
+
+VRP
+
+-
+
+-
+
+0.2
+
+VP-P
+
+6-1.2
+
+Analog Supply Current
+
+IAVDD
+
+-
+
+31.0
+
+52
+
+mA
+
+6-1.2
+
+Logic Voltage Supply
+Current
+
+IDVDD-S
+
+-
+
+2.3
+
+11
+
+mA
+
+6-1.2
+
+High Voltage Current
+
+IVGH
+
+-
+
+0.25
+
+1
+
+mA
+
+6-1.3
+
+Logic Current
+
+IDVDD-G
+
+-
+
+0.1
+
+0.5
+
+mA
+
+6-1.3
+
+Low Voltage Current
+
+IVGL
+
+-
+
+0.30
+
+1
+
+mA
+
+6-1.3
+
+Color Filter Substrate
+Voltage Current
+
+IVCOM
+
+-
+
+0.01
+
+1
+
+mA
+
+6-1.3
+
+Digital
+Input
+Signal
+Source
+Driver
+
+Gate
+Driver
+
+Ripple
+Voltage
+
+Source
+Driver
+
+Gate
+Driver
+
+Ver. 1.0
+
+TFT
+
+Oct. 26. 2010
+
+Notes
+
+6-1.1
+
+6-1.4
+
+9 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+[Note 6-1.1] Reference Gamma Correction Voltage [VREF0 to VREF10]
+
+Symbol
+
+Typ.
+
+Unit
+
+VREF1
+
+9.10
+
+V
+
+VREF2
+
+8.80
+
+V
+
+VREF3
+
+7.13
+
+V
+
+VREF4
+
+6.24
+
+V
+
+VREF5
+
+5.42
+
+V
+
+VREF6
+
+4.77
+
+V
+
+VREF7
+
+3.82
+
+V
+
+VREF8
+
+2.78
+
+V
+
+VREF9
+
+1.00
+
+V
+
+VREF10
+
+0.70
+
+V
+
+[Note 6-1.2] VIH = DVDD, VIL = GND, fSSC = 33.26MHz, fSOE = 31.5kHz, AVDD = 10V, V1 = 9.1V / V10 = 0.7V,
+with Probe Load.
+[Note 6-1.3] VIH = DVDD, VIL = GND, fGSC = 31.5kHz, VGH = 18.5V, VGL = -9.5V, with Probe Load.
+[Note 6-1.4] VGL can be changed later. It will be fixed in final CAS.
+[Note 6-1.5] VCOM should be optimized at 1 dot flicker pattern.
+RGBRGBRGBRGB RGB RGBRGB
+Row1
+
+G31Gray
+Display
+
+Row2
+Row3
+
+Black
+Display
+
+Row4
+Row5
+
+1 Dot Flicker Pattern
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+10 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+6-2. Power On/Off Sequence
+6-2.1 Power On Sequence
+Parameter
+
+Min.
+0
+0.1m
+0m
+1m
+1m
+0m
+300m
+
+t1
+t2
+t3
+t4
+t5
+t6
+t7
+
+Power On
+
+Timing
+Typ.
+10m
+-
+
+Max.
+-
+
+Unit
+
+Sec
+
+Notes
+
+6-2.1
+
+-
+
+‫ۀېۇڼڱٻۂۉۄۏۏۀڮٻہۊٻڀڋڌ ڈڊچ‬
+
+k}kk
+
+‫ڀڋڒ‬
+
+h}kk
+t1
+sVz
+
+‫ۀېۇڼڱٻۂۉۄۏۏۀڮٻہۊٻڀڋڌ ڈڊچ‬
+t2 ‫ڀڋڔ‬
+
+}ylm
+
+t3
+
+}ns
+
+t4
+YUW}GeGGG
+
+‫ڀڋڎ‬
+
+}no
+
+t5
+
+t6
+‫ڀڋڔ‬
+
+}jvt
+
+t7
+i
+
+on
+off
+
+[Note 6-2.1] AVDD must be supplied later than DVDD.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+11 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+6-2.2 Power Off Sequence
+Timing
+Parameter
+
+Notes
+Min.
+
+Typ.
+
+Max.
+
+t8
+
+0m
+
+-
+
+-
+
+t9
+
+0m
+
+-
+
+-
+
+t10
+
+0m
+
+-
+
+50m
+
+t11
+
+0m
+
+-
+
+-
+
+t12
+
+0m
+
+-
+
+-
+
+t13
+
+50m
+
+-
+
+-
+
+Power On
+
+Unit
+
+Sec
+
+6-2.2
+
+XZ
+‫ڀڋڎ‬
+
+k}kk
+
+‫ڀڋڎ‬
+
+‫ڀڋڎ‬
+
+sVz
+
+‫ڀڋڎ‬
+
+h}kk
+XY
+‫ڀڋڎ‬
+
+}ylm
+‫ڍڈ‬
+
+}ns
+
+XX
+
+‫ڀڋڎ‬
+
+}no
+
+XW
+‫ڀڋڎ‬
+`
+
+}jvt
+
+i
+
+on
+
+‫ڀڋڎ‬
+_
+
+off
+
+[Note 6-2.2] Power on Sequence must be observed to restart LCM after Power off.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+12 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+6-3. LED Backlight Characteristics
+Values
+Parameter
+
+Symbol
+
+Unit
+Min.
+
+Typ.
+
+Max.
+
+LED Current
+
+ILED
+
+60mA
+
+65mA
+
+70mA
+
+mA
+
+LED Voltage
+
+VLED
+
+26.0
+
+30.0
+
+34.0
+
+V
+
+LED Power
+
+PLED
+
+-
+
+1.95
+
+-
+
+W
+
+-
+
+1
+
+-
+
+EA
+
+LED chain
+
+Notes
+
+6-4.1
+
+[Note 6-4.1] LED PCB chain (principle sketch)
+
+Active Area
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+13 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+6-4. Timing Characteristics of Input Signals
+Ta=25୅
+
+Parameter
+
+Symbol
+
+Min.
+
+Typ.
+
+Max.
+
+Unit
+
+SSC Frequency
+
+fclk
+
+31.95
+
+33.26
+
+34.60
+
+MHz
+
+SSC Pulse Width
+
+Tcw
+
+9
+
+-
+
+-
+
+ns
+
+DATA/REV/SSPL/SSPR Setup Time
+
+Tsu
+
+4
+
+-
+
+-
+
+ns
+
+DATA/REV/SSPL/SSPR Hold Time
+
+Thd
+
+2
+
+-
+
+-
+
+ns
+
+SSPR Delay Time
+
+Tphl
+
+5
+
+10
+
+15
+
+ns
+
+Time that the last data to SOE
+
+Tld
+
+1
+
+-
+
+-
+
+Tclk
+
+SOE Pulse Width
+
+Twld
+
+2
+
+-
+
+-
+
+Tclk
+
+Time that SOE to SSPL
+
+Tlds
+
+5
+
+-
+
+-
+
+Tclk
+
+POL Setup Time
+
+Tpsu
+
+6
+
+-
+
+-
+
+ns
+
+POL Hold Time
+
+Tphd
+
+6
+
+-
+
+-
+
+ns
+
+GSC Frequency
+
+fGSC
+
+31.2
+
+31.5
+
+31.8
+
+kHz
+
+GSC,GOE,GSPU/GSPD Rising Time
+
+tr_in
+
+-
+
+-
+
+100
+
+ns
+
+GSC,GOE,GSPU/GSPD Falling Time
+
+tf_in
+
+-
+
+-
+
+100
+
+ns
+
+GSC Pulse Width
+
+tGSCH, tGSCL
+
+500
+
+-
+
+-
+
+ns
+
+GSPU / GSPD Setup Time
+
+tsu
+
+200
+
+-
+
+-
+
+ns
+
+GSPU / GSPD Hold Time
+
+thd
+
+300
+
+-
+
+-
+
+ns
+
+Driver Output Delay Time
+
+tdo
+
+-
+
+-
+
+900
+
+ns
+
+GOE Pulse Width
+
+tWCL
+
+1
+
+-
+
+-
+
+us
+
+Output Delay Time
+
+trpd, tfpd
+
+-
+
+-
+
+900
+
+ns
+
+S
+
+Notes
+
+O
+U
+R
+C
+E
+
+G
+A
+T
+
+E
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+Fig. 1
+
+Fig. 2
+
+14 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+Fig. 1 Source D-IC Timing Diagram
+
+3.3V
+(DVDD)
+Tclk
+
+Tcw
+
+70%
+30%
+
+Tcw
+
+SSC
+Tsu
+
+Thd
+
+Data
+REV
+Tsu
+
+Thd
+
+SSPL
+(INPUT)
+Tphl
+
+Tphl
+
+SSPR
+(OUTPUT)
+Tld
+
+SSC
+
+SOE
+
+SSC
+
+SSPL
+(INPUT)
+Tlds
+Twld
+
+Tld
+
+SOE
+Tpsu
+
+Tphd
+
+POL
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+15 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+Fig. 2 Gate D-IC Timing Diagram
+
+tGSCH
+
+tGSCL
+70%
+
+GSC
+30%
+tsu
+
+thd
+
+70%
+
+GSPU
+(INPUT)
+
+30%
+tdo
+
+tdo
+70%
+
+Output
+1~480
+
+30%
+
+GSC,
+GOE,
+GSPU/
+GSPD
+
+tWCL
+
+70%
+
+GOE
+30%
+
+tfpd
+
+trpd
+
+70%
+
+Output
+1~480
+30%
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+16 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+7. Electro-optical Characteristics
+7-1. Electro-optical Characteristics (Room Temperature)
+Ta=25qC, DVDD=3.3V, AVDD=10.0V, fv=60Hz, fclk= 33.26MHz, ILED = 65mA
+
+Min.
+
+Values
+Typ.
+
+Max.
+
+400
+
+600
+
+Center
+
+60
+60
+40
+50
+440
+
+9 point
+
+Parameter
+
+Symbol
+
+Condition
+
+Unit
+
+Notes
+
+Contrast Ratio
+
+CR
+
+Optimal
+
+-
+
+-
+
+7-1.1,
+Fig 3.
+
+x axis, right()=0q)
+Viewing x axis, left ()=180q)
+Angle
+y axis, up ()=90q)
+y axis, down ()=270q)
+Response Rise Time
+Time
+Decay Time
+Luminance
+
+4r
+4l
+4u
+4d
+TrR
+TrD
+L
+
+70
+70
+50
+60
+5
+15
+550
+
+8
+27
+-
+
+degree
+degree
+degree
+degree
+ms
+ms
+cd/m2
+
+Luminance Uniformity
+
+G WHITE
+
+80
+
+90
+
+-
+
+%
+
+0.270
+
+0.300
+
+0.330
+
+-
+
+0.285
+
+0.315
+
+0.345
+
+-
+
+Rx
+
+0.597
+
+0.627
+
+0.657
+
+-
+
+Ry
+
+0.313
+
+0.343
+
+0.373
+
+-
+
+0.300
+
+0.330
+
+0.360
+
+-
+
+0.582
+
+0.612
+
+0.642
+
+-
+
+Bx
+
+0.119
+
+0.149
+
+0.179
+
+-
+
+By
+
+0.058
+
+0.088
+
+0.118
+
+-
+
+Hrs
+
+10,000
+
+-
+
+-
+
+-
+
+Wx
+Wy
+
+Color Coordinates
+
+Gx
+Gy
+
+Life Time
+
+CR≥10
+
+ଟ
+
+Θ=0
+
+Center
+
+Center
+
+7-1.2,
+Fig 3.
+7-1.3,
+Fig 3.
+Fig 3.
+7-1.4,
+Fig 3.
+
+Fig 3.
+
+Fig 3.
+
+7-1.5
+
+Fig. 3 Optical Characteristic Measurement Equipment and Method
+
+Optical Stage(x,y)
+
+LCD Module
+୔Photo-Detector :
+-PR-880(Luminance)
+-PR-650(Color Coordinates)
+or equivalent
+
+50cm
+Measuring Condition ;
+-Measuring surroundings : Dark Room
+-Measuring temperature : Ta=25୅
+-Adjust operating voltage to get optimum contrast at the center of the display.
+
+-Measured value at the center point of LCD panel after more than 30 minutes while
+backlight turning on.
+Ver. 1.0
+
+Oct. 26. 2010
+
+17 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+[Note 7-1.1]
+Contrast ratio is defined as follows ;
+Photo detector output with LCD being “white”
+Contrast Ratio(CR) =
+Photo detector output with LCD being “black”
+[Note 7-1.2]
+Viewing angle range is defined as follows;
+Normal
+E
+
+f = 180ଟ, Left
+
+Y
+
+f = 90 ଟ
+, Up (12:00)
+
+q
+f
+
+X
+f = 0 ଟ, Right
+
+f = 270 ଟ, Down (6:00)
+
+(FPC side))
+[Note 7-1.3]
+Response time is obtained by measuring the transition time of photo detector output, when input
+signals are applied to make center point “black” and “white”.
+
+100%
+90%
+
+White
+
+White
+
+Optical
+Response
+10%
+Black
+
+0%
+
+TrR
+
+Ver. 1.0
+
+TrD
+
+Oct. 26. 2010
+
+Time
+
+18 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+[Note 7-1.4]
+The panel total variation (GWHITE) is determined by measuring LN at each test position 1 through 9.
+The panel total variation (GWHITE) is defined as follows ;
+Minimum(L1, L2, L3, L4, L5, L6, L7, L8, L9)
+Ý 100 (%)
+
+Panel total variation (GWHITE) =
+Maximum(L1, L2, L3, L4, L5, L6, L7, L8, L9)
+
+Active Area
+
+[Note 7-1.5]
+The life time is determined as the time at which brightness of LED is 70% compare to that of initial
+value at the typical LED current.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+19 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+8. Mechanical Characteristics
+Parameter
+
+Outline Dimension
+
+Specification
+Width
+
+167.0 ·0.3
+
+mm
+
+Height
+
+93.0 ·0.3
+
+mm
+
+Depth
+
+6.8 ·0.3
+
+mm
+
+Width
+
+158.3 ·0.3
+
+mm
+
+Height
+
+84.5 ·0.3
+
+mm
+
+Width
+
+156.24
+
+mm
+
+Height
+
+82.368
+
+mm
+
+150g (Typ.) / 160g (Max.)
+
+g
+
+Bezel Area
+Active Display
+Area
+Weight
+
+Ver. 1.0
+
+Unit
+
+Oct. 26. 2010
+
+20 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+<FRONT VIEW>
+
+Ver. 1.0
+
+Unit:[mm], General tolerance: r 0.3mm
+
+Oct. 26. 2010
+
+21 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+
+<REAR VIEW>
+
+Ver. 1.0
+
+Unit:[mm], General tolerance: r 0.3mm
+
+Oct. 26. 2010
+
+22 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+9. Reliability Test
+No.
+
+Test Items
+
+Test Condition
+
+Notes
+
+1
+2
+3
+4
+
+High Temperature Storage Test
+Low Temperature Storage Test
+High Temperature Operation Test
+Low Temperature Operation Test
+High Temperature and High Humidity
+Operation Test
+
+Ta =85୅ 240h
+Ta =-40୅ 240h
+TP =85୅ 240h
+Ta =-30୅ 240h
+
+9-1,2,3
+9-1,2,3
+9-1,2,3,4
+9-1,2,3
+
+Ta =65୅ 90%RH 240h
+
+9-1,2,3
+
+5
+6
+
+Light-proof
+
+UV Exposure, Ta=65
+225.6kJ/m2@ 340nm 144h
+
+7
+
+Thermal Shock Test
+(non-operating)
+
+-40୅(0.5h) ~ 85୅(0.5h) / 300 cycles
+
+8
+
+Dew Condensation
+
+-30୅(0.5h,non-operation)
+ൾ 25୅ 95%RH(10m operation)
+, 10 cycles
+1Cycle = 48h, 5 cycles
+
+9-2,3
+9-2,3
+
+90~95%RH
+
+9
+
+Thermal Cycle
+(non-operating)
+
+65୅
+2.5
+2.5 3 2.5 2.5 3 2.5
+0୅
+
+10
+
+Electro Static Discharge Test
+
+11
+
+Shock Test
+(non-operating)
+
+12
+
+Vibration Test
+(non-operating)
+
+13
+14
+15
+
+Terminal Intensity
+(non-operating)
+Push Test
+(non-operating)
+Withstand pressure
+(non-operating)
+
+8h
+
+2.5
+
+9-2,3
+
+25୅
+2.5 3
+
+2.5 2.5 3
+
+2.5
+
+3
+
+-Panel Surface/Top_case
+: 150pF 㫧15kV 150Ω
+(Direct Discharge, Five Times)
+-FPC Input Terminal : 200pF 㫧200V 0Ω
+980m/s2 , t=6ms
+X,Y,Z direction 2 Times
+5~10 Hz Amplitude 25mm
+10~30 Hz 3.7 Ý 9.8 m/s2
+30~50 Hz 1.6 Ý 9.8 m/s2
+50~80 Hz 0.7 Ý 9.8 m/s2
+80~100 Hz 0.3 Ý 9.8 m/s2
+X,Y,Z direction 8min Ý 2 sweep
+Each direction 96h
+Loading 500g, · 90 degree
+from outside of terminal
+Using push and pull gage on the center point
+with diameter 12.7mm bar, pressure 5 Ý 9.8N
+5 Ý 104 Pa , 2h
+
+[Note 9-1] Ta = Ambient Temperature, TP = Panel Surface Temperature
+[Note 9-2] Result Evaluation Criteria
+TFT-LCD panels should take place at room temperature for 24 hours after the reliability tests finish.
+[Note 9-3] In the standard condition, there shall be no practical problems that may affect the display function.
+[Note 9-4] Crosstalk and indeterminate mura are guaranteed under 70୅.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+23 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+10. International Standards
+10-1. Safety
+a) UL 60950-1, Second Edition, Underwriters Laboratories Inc.
+Information Technology Equipment - Safety - Part 1 : General Requirements.
+b) CAN/CSA C22.2 No.60950-1-07, Second Edition, Canadian Standards Association.
+Information Technology Equipment - Safety - Part 1 : General Requirements.
+c) EN 60950-1:2006 + A11:2009, European Committee for Electro technical Standardization (CENELEC).
+Information Technology Equipment - Safety - Part 1 : General Requirements.
+
+10-2. EMC
+a) ANSI C63.4 “Methods of Measurement of Radio-Noise Emissions from Low-Voltage Electrical and
+Electrical Equipment in the Range of 9KHz to 40GHz. “American National Standards Institute(ANSI),
+1992
+b) C.I.S.P.R “Limits and Methods of Measurement of Radio Interface Characteristics of Information
+Technology Equipment.“ International Special Committee on Radio Interference.
+c) EN 55022 “Limits and Methods of Measurement of Radio Interface Characteristics of Information
+Technology Equipment.“ European Committee for Electro technical Standardization.(CENELEC), 1998
+( Including A1: 2000 )
+
+10-3. Environment
+a) RoHS, Directive 2002/95/EC of the European Parliament and of the council of 27 January 2003
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+24 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+11. Packing
+11-1. Designation of Lot Mark
+a) Lot Mark
+A
+
+B
+
+C
+
+D
+
+E
+
+F
+
+G
+
+H
+
+A,B,C : SIZE(INCH)
+E : MONTH
+
+I
+
+J
+
+K
+
+L
+
+M
+
+D : YEAR
+F ~ M : SERIAL NO.
+
+Note
+1. YEAR
+Year
+
+2001
+2011
+
+2002
+2012
+
+2003
+2013
+
+2004
+2014
+
+2005
+2015
+
+2006
+2016
+
+2007
+2017
+
+2008
+2018
+
+2009
+2019
+
+2010
+2020
+
+Mark
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+0
+
+Month
+
+Jan
+
+Feb
+
+Mar
+
+Apr
+
+May
+
+Jun
+
+Jul
+
+Aug
+
+Sep
+
+Oct
+
+Nov
+
+Dec
+
+Mark
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+A
+
+B
+
+C
+
+2. MONTH
+
+b) Location of Lot Mark
+Serial No. is printed on the label. The label is attached to the backside of the LCD module.
+This is subject to change without prior notice.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+25 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+11-2. Packing Form
+a) Package quantity in one box :40 pcs
+b) Box Size : 475Ý335Ý150 (mm)
+
+Ver. 1.0
+
+NO.
+
+Description
+
+1
+
+Module
+
+2
+
+Packing, Bottom
+
+EPP
+
+3
+
+Packing, Top
+
+EPP
+
+4
+
+Carton Box
+
+SWR4
+
+5
+
+Tap
+Tape
+
+OPP 70MMx300m
+
+6
+
+Lab
+Label
+
+Art Paper 100x70
+
+Oct. 26. 2010
+
+Material
+
+26 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+www.panelook.com
+
+Global LCD Panel Exchange Center
+
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+12. PRECAUTIONS
+Please pay attention to the following when you use this TFT LCD module.
+
+12-1. MOUNTING PRECAUTIONS
+(1) You must mount a module using holes arranged in four corners or four sides.
+(2) You should consider the mounting structure so that uneven force(ex. Twisted stress) is not applied
+to the module.
+And the case on which a module is mounted should have sufficient strength so that external force
+is not transmitted directly to the module.
+(3) Please attach a transparent protective plate to the surface in order to protect the polarizer.
+Transparent protective plate should have sufficient strength in order to the resist external force.
+(4) You should adopt radiation structure to satisfy the temperature specification.
+(5) Acetic acid type and chlorine type materials for the cover case are not desirable because the former
+generates corrosive gas of attacking the polarizer at high temperature and the latter causes circuit
+break by electro-chemical reaction.
+(6) Do not touch, push or rub the exposed polarizers with glass, tweezers or anything harder than HB
+pencil lead. And please do not rub with dust clothes with chemical treatment.
+Do not touch the surface of polarizer for bare hand or greasy cloth.(Some cosmetics deteriorate
+the polarizer.)
+(7) When the surface becomes dusty, please wipe gently with absorbent cotton or other soft materials
+like chamois soaks with petroleum benzine. Normal-hexane is recommended for cleaning the
+adhesives used to attach front / rear polarizers. Do not use acetone, toluene and alcohol because
+they cause chemical damage to the polarizer.
+(8) Wipe off saliva or water drops as soon as possible. Their long time contact with polarizer causes
+deformations and color fading.
+(9) Do not open the case because inside circuits do not have sufficient strength.
+(10) The metal case of a module should be contacted to electrical ground of your system.
+
+12-2. OPERATING PRECAUTIONS
+(1) The spike noise causes the mis-operation of circuits. It should be lower than following voltage :
+V=·200mV(Over and under shoot voltage)
+(2) Response time depends on the temperature.(In lower temperature, it becomes longer.)
+(3) Brightness depends on the temperature. (In higher temperature, it becomes lower.)
+(4) Be careful for condensation at sudden temperature change. Condensation makes damage to
+polarizer or electrical contacted parts. And after fading condensation, smear or spot will occur.
+(5) When fixed patterns are displayed for a long time, remnant image is likely to occur.
+(6) Module has high frequency circuits. Sufficient suppression to the electromagnetic interference
+shall be done by system manufacturers. Grounding and shielding methods may be important to
+minimize the interference.
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+27 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+Global LCD Panel Exchange Center
+
+www.panelook.com
+LA070WV1
+Liquid Crystal Display
+
+Product Specification
+12-3. ELECTROSTATIC DISCHARGE CONTROL
+Since a module is composed of electronic circuits, it is not strong to electrostatic discharge. Make certain
+that treatment persons are connected to ground through wrist band etc. And don’t touch interface pin directly.
+
+12-4. PRECAUTIONS FOR STRONG LIGHT EXPOSURE
+Strong light exposure causes degradation of polarizer and color filter.
+
+12-5. STORAGE
+When storing modules as spares for a long time, the following precautions are necessary.
+(1) Store them in a dark place. Do not expose the module to sunlight or fluorescent light. Keep the
+temperature between 5¶C and 35¶C at normal humidity.
+(2) The polarizer surface should not come in contact with any other object.
+It is recommended that they be stored in the container in which they were shipped.
+
+12-6. HANDLING PRECAUTIONS FOR PROTECTION FILM
+(1) When the protection film is peeled off, static electricity is generated between the film and polarizer.
+This should be peeled off slowly and carefully by people who are electrically grounded and with well
+ion-blown equipment or in such a condition, etc.
+(2) The protection film is attached to the polarizer with a small amount of glue. If some stress is applied
+to rub the protection film against the polarizer during the time you peel off the film, the glue is apt to
+remain on the polarizer.
+Please carefully peel off the protection film without rubbing it against the polarizer.
+(3) When the module with protection film attached is stored for a long time, sometimes there remains a
+very small amount of glue still on the polarizer after the protection film is peeled off.
+(4) You can remove the glue easily. When the glue remains on the polarizer surface or its vestige is
+recognized, please wipe them off with absorbent cotton waste or other soft material like chamois
+soaked with normal-hexane.
+
+13. Production Center
+- Panel : LG Display (Gumi, Korea)
+- Module Assembly : LG Display (Nanjing, China)
+- Shipping Place : LG Display (Nanjing, China)
+
+Ver. 1.0
+
+Oct. 26. 2010
+
+28 / 28
+
+One step solution for LCD / PDP / OLED panel application: Datasheet, inventory and accessory! www.panelook.com
+
+

@@ -3,6 +3,15 @@ name = "pico_tcon"
 version = "0.1.0"
 edition = "2021"
 
+# Disable the implicit test/bench harness. It pulls in the std-only `test`
+# crate, which doesn't exist for the no_std thumbv6m target — that's what makes
+# RustRover flag "can't find crate for `test`" on the #![no_std] line.
+[[bin]]
+name = "pico_tcon"
+path = "src/main.rs"
+test = false
+bench = false
+
 [dependencies]
 # Async runtime + the #[embassy_executor::main] entry-point attribute.
 embassy-executor = { version = "0.10.0", features = ["platform-cortex-m", "executor-thread"] }
