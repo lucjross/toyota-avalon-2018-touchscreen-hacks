@@ -87,12 +87,15 @@ async fn main(_spawner: Spawner) {
     // follow the scan (selected row on). Idle LOW (enabled); at each HSYNC edge
     // (the gate-clock row advance) emit a brief ~1.5 us HIGH blip to blank the
     // transition so adjacent rows don't overlap. That blanking is what isolates
-    // the rows. Datasheet GOE pulse width >=1us. gpio 4 = HSYNC.
+    // the rows. Datasheet GOE pulse width >=1us. gpio 3 = DE.
     let goe_prg = pio_asm!(
         "set pins, 1",        // idle HIGH: gate disabled (blanked)
         ".wrap_target",
         "wait 1 gpio 3",      // wait for DE high (active video starts)
-        "set pins, 0",        // GOE low: enable gates
+        "set x, 31",          // 2.3 us delay (32 * 9 = 288 cycles at 125MHz)
+    "goe_delay:",
+        "jmp x-- goe_delay [8]",
+        "set pins, 0",        // GOE low: enable gates ONLY AFTER old row is off
         "wait 0 gpio 3",      // wait for DE low (blanking starts)
         "set pins, 1",        // GOE high: blank porches and transition
         ".wrap",
