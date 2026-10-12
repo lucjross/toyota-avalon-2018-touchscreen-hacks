@@ -1,19 +1,33 @@
 #![no_std]
 #![no_main]
 
+mod input;
+
 use embassy_executor::Spawner;
 use embassy_rp::bind_interrupts;
-use embassy_rp::peripherals::{PIO0, PIO1};
+use embassy_rp::gpio::{Input, Pull};
+use embassy_rp::peripherals::{PIO0, PIO1, USB};
 use embassy_rp::pio::program::pio_asm;
 use embassy_rp::pio::{Config, Direction, InterruptHandler, Pio};
+use embassy_rp::usb;
+use embassy_usb::class::cdc_acm::{CdcAcmClass, State};
+use embassy_usb::UsbDevice;
+use static_cell::StaticCell;
 
 bind_interrupts!(struct Irqs {
     PIO0_IRQ_0 => InterruptHandler<PIO0>;
     PIO1_IRQ_0 => InterruptHandler<PIO1>;
+    USBCTRL_IRQ => usb::InterruptHandler<USB>;
 });
 
+/// Services the USB bus (enumeration, transfers) for as long as the device runs.
+#[embassy_executor::task]
+async fn usb_task(mut device: UsbDevice<'static, usb::Driver<'static, USB>>) -> ! {
+    device.run().await
+}
+
 #[embassy_executor::main]
-async fn main(_spawner: Spawner) {
+async fn main(spawner: Spawner) {
     let p = embassy_rp::init(Default::default());
 
     // Configure onboard LED (GP25) as Output
@@ -65,13 +79,19 @@ async fn main(_spawner: Spawner) {
     );
 
     // SOE: source output enable. The datasheet specifies that SOE is a line latch strobe,
-    // NOT a level, and should emit a brief ~2-clock pulse at the DE falling edge.
-    // We add a 1 clock cycle delay (Tld >= 1 clock) before raising SOE.
+    // NOT a level, and should emit a brief ~2-clock pulse after the last pixel of the line.
+    // SOE switches the source lines to the next line's data, so it must not fire until the
+    // gate has actually closed: GOE goes high at the DE falling edge, but the gate outputs
+    // take up to 900 ns to turn off (trpd). We wait ~1.28 us (160 cycles) first, then add
+    // the 1 clock Tld delay before raising SOE. Still far ahead of the next SSPL (Tlds).
     // gpio 3 = DE, gpio 2 = SSC.
     let soe_prg = pio_asm!(
         ".wrap_target",
         "wait 1 gpio 3",      // wait for DE high
         "wait 0 gpio 3",      // wait for DE low
+        "set x, 19",          // gate-off delay: 20 * 8 = 160 cycles = 1.28 us at 125MHz
+    "soe_delay:",
+        "jmp x-- soe_delay [7]",
         "wait 1 gpio 2",      // wait 1 clock cycle (Tld delay)
         "wait 0 gpio 2",
         "set pins, 1",        // SOE high
@@ -175,6 +195,7 @@ async fn main(_spawner: Spawner) {
         ".wrap_target",
         "wait 0 gpio 4",      // HSYNC falling edge
         "set pins, 0",        // GSC low
+        "irq nowait 4",       // tell POL (same PIO block) a filtered line edge happened
         "set x, 31",          // delay 512 ns (64 cycles at 125MHz)
     "gsc_delay:",
         "jmp x-- gsc_delay [1]",
@@ -186,19 +207,17 @@ async fn main(_spawner: Spawner) {
         ".wrap",
     );
 
-    // POL: 1-line inversion, toggled autonomously in hardware on the HSYNC falling edge
-    // (during blanking, while GOE blanks the gates), so the polarity flip never injects
-    // current into the rails mid-active-line — POL is static across the whole active line.
-    // DC balance / frame-to-frame alternation depends on v_total being ODD (527): an odd
-    // line count flips line 0's polarity every frame automatically. If the vertical porches
-    // are ever retimed to an even v_total, frame alternation breaks -> image retention.
+    // POL: 1-line inversion, toggled once per line (during blanking). It does not watch HSYNC
+    // itself: the GSC state machine raises PIO flag 4 on each HSYNC edge it has already
+    // filtered, so POL toggles exactly as often as the gate advances. Watching the raw pin
+    // here would double-toggle on HSYNC ringing, and DC balance needs an odd toggle count
+    // per frame (527).
     let pol_prg = pio_asm!(
         "set y, 0",
         ".wrap_target",
-        "wait 0 gpio 4",      // wait HSYNC low (line start / blanking starts)
+        "wait 1 irq 4",       // wait for GSC's line flag (and clear it)
         "mov pins, y",        // set POL to current polarity
         "mov y, ~y",          // toggle polarity
-        "wait 1 gpio 4",      // wait HSYNC high to avoid re-triggering
         ".wrap",
     );
 
@@ -229,6 +248,54 @@ async fn main(_spawner: Spawner) {
     pol_sm.set_enable(true);
 
     let mut _pin_vsync = embassy_rp::gpio::Input::new(p.PIN_9, embassy_rp::gpio::Pull::None);
+
+    // ── Front-panel encoders → USB CDC serial to the Pi ───────────────────
+    // E1 volume (detented): GP16 CLK, GP17 DT, GP18 SW.  E2 tuning (no detents): GP19/GP20/GP21.
+    // Inputs use the internal pull-up; wire the common to GND.
+    spawner.spawn(
+        input::encoder_task(
+            1,
+            input::Decode::Detent,
+            Input::new(p.PIN_16, Pull::Up),
+            Input::new(p.PIN_17, Pull::Up),
+        )
+        .unwrap(),
+    );
+    spawner.spawn(input::button_task(1, Input::new(p.PIN_18, Pull::Up)).unwrap());
+    spawner.spawn(
+        input::encoder_task(
+            2,
+            input::Decode::EveryEdge,
+            Input::new(p.PIN_19, Pull::Up),
+            Input::new(p.PIN_20, Pull::Up),
+        )
+        .unwrap(),
+    );
+    spawner.spawn(input::button_task(2, Input::new(p.PIN_21, Pull::Up)).unwrap());
+
+    let driver = usb::Driver::new(p.USB, Irqs);
+    let mut config = embassy_usb::Config::new(0x16c0, 0x27dd);
+    config.manufacturer = Some("toyota-etch");
+    config.product = Some("Head unit controls");
+    config.serial_number = Some("0001");
+
+    static CONFIG_DESC: StaticCell<[u8; 256]> = StaticCell::new();
+    static BOS_DESC: StaticCell<[u8; 256]> = StaticCell::new();
+    static CONTROL_BUF: StaticCell<[u8; 64]> = StaticCell::new();
+    static CDC_STATE: StaticCell<State> = StaticCell::new();
+    let mut builder = embassy_usb::Builder::new(
+        driver,
+        config,
+        CONFIG_DESC.init([0; 256]),
+        BOS_DESC.init([0; 256]),
+        &mut [], // no Microsoft OS descriptors
+        CONTROL_BUF.init([0; 64]),
+    );
+    let class = CdcAcmClass::new(&mut builder, CDC_STATE.init(State::new()), 64);
+    let (tx, _rx) = class.split();
+    spawner.spawn(usb_task(builder.build()).unwrap());
+    spawner.spawn(input::report_task(tx).unwrap());
+
     loop {
         embassy_time::Timer::after_secs(3600).await;
     }

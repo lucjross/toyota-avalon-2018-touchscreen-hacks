@@ -54,7 +54,10 @@ gate-side strobes.
 | Output delay | trpd, tfpd | – | – | 900 | ns |
 
 Note fGSC ≈ 31.5 kHz is exactly the **line rate** — one GSC edge per horizontal
-line (527 lines × 60 Hz ≈ 31.6 kHz). GSC is the "next row" clock.
+line. GSC is the "next row" clock. The Pi's `hdmi_timings` set the line rate:
+a 33.333 MHz pixel clock over `h_total` = 1056 px gives **31.57 kHz**, and 527
+lines per frame gives **59.9 Hz**. The two clock limits together bound `h_total`:
+fclk ≥ 31.95 MHz and fGSC ≤ 31.8 kHz require `h_total` ≥ ~1005 px.
 
 ---
 
@@ -103,13 +106,19 @@ The delay count sets the image's **horizontal position** (the back-porch length 
 Pico cycles). Two properties keep it centered and stable:
 
 - The delay runs on the Pico's 125 MHz clock, a separate oscillator from the Pi's
-  pixel clock. `h_total` is kept divisible by 4 (976 px = 3660 Pico clocks), so
+  pixel clock. `h_total` is kept divisible by 4 (1056 px = 3960 Pico clocks), so
   each HSYNC falls on the same Pico-clock phase and the delay endpoint does not
-  drift against SSC.
+  drift against SSC. The delay is measured from the HSYNC rising edge, so it
+  depends only on the back porch; the front porch can change without moving the
+  image.
 - The rising edge is fired directly, with no SSC-align wait before it. DE and SSC
   are phase-coincident, so a pre-pulse `wait gpio 2` would resolve ±1 SSC per line
   and shift the pulse position; it is omitted. The `wait gpio 2` pair after the
   rising edge sets only the pulse width.
+- Because the delay is counted on the Pico's clock and SSC comes from the Pi, the
+  SSPL edge's phase against SSC is not locked, so the `Tsu`/`Thd` window around an
+  SSC edge isn't guaranteed. The 12 px black border around the image (a 776 px
+  framebuffer on an 800 px panel) keeps a one-pixel start error out of view.
 
 ## 2. SOE — source output enable
 
@@ -125,11 +134,17 @@ data: Tld ≥ 1 Tclk (last data → SOE), Twld ≥ 2 Tclk (SOE pulse width), and
 Tlds ≥ 5 Tclk before the next SSPL.*
 
 **Firmware.** DE marks active video; its falling edge = "last data just went in."
-The SM waits `Tld`=1 clock, then emits a 2-clock `Twld` pulse:
+SOE also switches the source lines to the next line's data, so it must not fire
+while the gate row is still open: GOE goes high at the DE falling edge, but the gate
+outputs take up to 900 ns (`tfpd`) to turn off. The SM therefore waits ~1.28 µs,
+then `Tld`=1 clock, then emits a 2-clock `Twld` pulse:
 
 ```asm
 "wait 1 gpio 3",      // DE high
 "wait 0 gpio 3",      // DE low  (last data in)
+"set x, 19",          // gate-off delay: 20 × 8 = 160 cycles = 1.28 µs
+"soe_delay:",
+"jmp x-- soe_delay [7]",
 "wait 1 gpio 2",      // Tld: wait 1 SSC clock
 "wait 0 gpio 2",
 "set pins, 1",        // SOE high
@@ -159,10 +174,10 @@ The RP2040 has two PIO blocks, each with **4 state machines** and **32
 instructions** of shared program memory. Six signals can't fit on one block's 4
 state machines, so they *must* split across both blocks — but that only forces
 *some* split, not this particular one. Both blocks here have room to spare:
-PIO0 holds SSPL (12) + SOE (10) + GOE (5) = 27 instructions, PIO1 holds
-GSPU (11) + GSC (9) + POL (5) = 25, and moving GOE to PIO1 would give 22 / 30 —
-still under 32. So neither the state-machine count nor the instruction budget
-pins GOE to PIO0. It genuinely fits on either block.
+PIO0 holds SSPL (10) + SOE (12) + GOE (7) = 29 instructions, PIO1 holds
+GSPU (11) + GSC (10) + POL (4) = 25, and moving GOE to PIO1 would give 22 / 32 —
+it would fit, filling PIO1 exactly. So neither the state-machine count nor the
+instruction budget pins GOE to PIO0. It fits on either block.
 
 The layout instead groups programs by **which sync signal they trigger on**,
 not by the datasheet's Source-vs-Gate labeling:
@@ -170,7 +185,7 @@ not by the datasheet's Source-vs-Gate labeling:
 - **PIO0 — the DE / active-video group.** Every program keys off `DE` (gpio 3) or
   the source clock: SSPL (HSYNC + SSC), SOE (**DE** + SSC), GOE (**DE**).
 - **PIO1 — the line/frame-structure group**, keyed off HSYNC/VSYNC: GSPU
-  (VSYNC + HSYNC), GSC (HSYNC), POL (HSYNC).
+  (VSYNC + HSYNC), GSC (HSYNC), POL (GSC's per-line flag).
 
 GOE's job is to blank the gate outputs **exactly across the active-video window** —
 low on DE-high, high on DE-low — which makes it a DE-triggered signal sharing its
@@ -198,13 +213,17 @@ half-selected during a transition.
 *Datasheet Fig. 2 (Gate D-IC) — GOE HIGH blanks the row outputs; pulse width
 tWCL ≥ 1 µs, output response tfpd / trpd ≤ 900 ns.*
 
-**Firmware.** Idle HIGH (blanked); enable only across active video:
+**Firmware.** Idle HIGH (blanked); enable 2.3 µs after active video starts, and
+blank again when it ends:
 
 ```asm
 "set pins, 1",        // idle HIGH: gate disabled (blanked)
 ".wrap_target",
 "wait 1 gpio 3",      // DE high -> active video
-"set pins, 0",        // GOE low: enable gates
+"set x, 31",          // 2.3 µs delay (32 × 9 = 288 cycles)
+"goe_delay:",
+"jmp x-- goe_delay [8]",
+"set pins, 0",        // GOE low: enable gates only once the previous row is off
 "wait 0 gpio 3",      // DE low  -> blanking
 "set pins, 1",        // GOE high: blank porches + row transition
 ```
@@ -212,9 +231,10 @@ tWCL ≥ 1 µs, output response tfpd / trpd ≤ 900 ns.*
 **Synchronization to DE.** Note the datasheet figure above specifies GOE against
 its *own outputs* (pulse width and blank/unblank delay) — it does not show how GOE
 is positioned within the line. That positioning is our design choice: GOE is
-locked directly to the Pi's `DE` (gpio 3), going **low on DE-high** (gates enabled
-for the whole active window) and **high on DE-low** (gates blanked through both
-porches and the GSC row-advance that happens during blanking). Because the DE-low
+locked directly to the Pi's `DE` (gpio 3), going **low 2.3 µs after DE-high**
+(gates enabled for the rest of the active window) and **high on DE-low** (gates
+blanked through both porches and the GSC row-advance that happens during
+blanking). Because the DE-low
 blanking interval is far wider than the `tWCL`=1 µs minimum, the pulse-width spec
 is met with enormous margin, and every current-injecting row transition lands
 inside a blanked window.
@@ -235,9 +255,10 @@ the `GSC` edge that clocks it in.
 edge with tsu ≥ 200 ns setup / thd ≥ 300 ns hold; GSC clocks the row on at
 tGSCH / tGSCL ≥ 500 ns, and the selected output responds after tdo ≤ 900 ns.*
 
-**Firmware.** At VSYNC, step past the first HSYNC transition window, raise GSPU a
-full line before the loading edge (≫ 200 ns setup), hold ~1 µs (≫ 300 ns hold),
-then drop before the next edge so only one token loads:
+**Firmware.** At VSYNC, step past the first HSYNC transition window, then raise
+GSPU on an HSYNC falling edge — the same edge that drops GSC. GSC rises ~0.53 µs
+later, so GSPU has been high ≈530 ns (setup ≥ 200 ns) and stays high ≈500 ns after
+that edge (hold ≥ 300 ns) before dropping, so only one token loads:
 
 ```asm
 "wait 0 gpio 9",      // VSYNC low
@@ -245,7 +266,7 @@ then drop before the next edge so only one token loads:
 "set x, 31",
 "vsync_delay:",
 "jmp x-- vsync_delay [31]",  // ~8 µs: step past the HSYNC transition
-"wait 0 gpio 4",      // first line's blanking
+"wait 0 gpio 4",      // HSYNC falling edge (GSC drops on this same edge)
 "set pins, 1",        // GSPU high (setup begins)
 "set y, 15",
 "gspu_hold:",
@@ -264,16 +285,18 @@ then drop before the next edge so only one token loads:
 *Datasheet Fig. 2 (Gate D-IC) — GSC advances the selected row once per line at
 fGSC ≈ 31.5 kHz, with tGSCH / tGSCL ≥ 500 ns high/low.*
 
-**Firmware.** Drop GSC at the HSYNC falling edge, wait ~512 ns (> the 500 ns
+**Firmware.** Drop GSC at the HSYNC falling edge, wait ~528 ns (> the 500 ns
 minimum), then raise it — so the row advance lands **inside horizontal blanking**
-(GOE has the outputs blanked), drawing no current on the active line:
+(GOE has the outputs blanked), drawing no current on the active line. The same edge
+raises PIO flag 4, which tells the POL state machine a line has started:
 
 ```asm
 "wait 0 gpio 4",      // HSYNC falling edge
 "set pins, 0",        // GSC low
+"irq nowait 4",       // flag the (filtered) line edge for POL
 "set x, 31",
 "gsc_delay:",
-"jmp x-- gsc_delay [1]",      // ~512 ns  (>= tGSCL 500 ns)
+"jmp x-- gsc_delay [1]",      // GSC low 66 cycles = 528 ns  (>= tGSCL 500 ns)
 "set pins, 1",        // GSC high: row advance during blanking
 "wait 1 gpio 4",      // HSYNC high
 "set x, 15",
@@ -295,24 +318,25 @@ keeps the panel DC-balanced (LC degrades under net DC).
 *Datasheet Fig. 1 (Source D-IC) — POL sets the source drive polarity and must be
 stable across the SOE strobe: Tpsu ≥ 6 ns setup / Tphd ≥ 6 ns hold.*
 
-**Firmware.** POL is toggled autonomously on the HSYNC falling edge — during
-blanking, while GOE blanks the gates — so the flip is *stable* across the whole
-active line (and thus across the SOE strobe inside it), never injecting current
-mid-line:
+**Firmware.** POL toggles once per line, during blanking while GOE blanks the
+gates, so the flip is *stable* across the whole active line (and thus across the
+SOE strobe inside it) and never injects current mid-line. POL does not watch HSYNC
+itself: it waits on the flag the GSC state machine raises at each HSYNC edge GSC has
+already accepted, so POL toggles exactly as often as the gate advances:
 
 ```asm
 "set y, 0",
 ".wrap_target",
-"wait 0 gpio 4",      // HSYNC low (blanking)
+"wait 1 irq 4",       // GSC's per-line flag (waiting clears it)
 "mov pins, y",        // drive POL to current polarity
 "mov y, ~y",          // toggle for next line
-"wait 1 gpio 4",      // HSYNC high (avoid re-trigger)
 ```
 
 Frame-to-frame alternation (the other half of DC balance) relies on **v_total
 being odd (527)**: an odd line count flips line 0's polarity every frame
 automatically. Re-timing the vertical porches to an even v_total would break
-frame alternation and cause image retention.
+frame alternation and cause image retention. The Pi emits exactly 527 HSYNC pulses
+per frame.
 
 ---
 
@@ -331,5 +355,6 @@ those sync signals.
   `SSC` clocks. `SSPL`'s horizontal position is a system-clock delay held
   phase-locked to `SSC` by keeping `h_total` divisible by 4 (see section 1).
 
-Every generated pulse meets the datasheet minimums (`Tsu`, `Thd`, `Twld`,
-`tGSCH`, `tWCL`).
+By calculation, the pulse widths and gate-side setup/hold times meet the datasheet
+minimums (`Twld`, `tGSCH`/`tGSCL`, `tsu`/`thd`, `tWCL`). SSPL's `Tsu`/`Thd` against an
+SSC edge is the exception: it is not locked (see section 1).

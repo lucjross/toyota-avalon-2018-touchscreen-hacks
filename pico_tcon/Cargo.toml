@@ -22,6 +22,19 @@ embassy-rp = { version = "0.10.0", features = ["rp2040", "time-driver", "critica
 # embassy-rp's "time-driver" implements the clock for this crate; required.
 embassy-time = "0.5.1"
 
+# USB device stack (enumeration, CDC-ACM virtual serial port) on top of the RP2040's USB controller.
+embassy-usb = "0.6.0"
+
+# Async channel (encoder tasks -> USB task) and select() for waiting on two pins at once.
+embassy-sync = "0.8.0"
+embassy-futures = "0.1.2"
+
+# One-time-initialised statics for the USB descriptor buffers (they must live forever).
+static_cell = "2"
+
+# Cortex-M0+ has no atomic compare-and-swap; emulate it with a critical section (needed by static_cell).
+portable-atomic = { version = "1", features = ["critical-section"] }
+
 # ARM Cortex-M core support: startup code, vector table, the reset handler.
 cortex-m = { version = "0.7.6", features = ["inline-asm"] }
 cortex-m-rt = "0.7.0"
