@@ -17,6 +17,11 @@ The active profile is switched at runtime with `headunitctl profile NAME`, which
 to this daemon over a Unix socket (SOCKET_PATH). The daemon always starts in the
 `system` profile.
 
+Every event is also republished, unchanged, on a second socket (EVENTS_PATH), whatever
+the active profile. Programs that handle input themselves (the games in arcade/) read
+the events there and switch to the empty `raw` profile so the daemon does nothing else
+with them.
+
 Must run as root (uinput, shutdown).
 """
 
@@ -38,7 +43,8 @@ except ImportError:  # lets the profile logic be exercised off the Pi
 
 BLON_PIN = 26  # backlight enable (YS-DZ-3.1 BLON)
 SERIAL_GLOB = "/dev/serial/by-id/*Head_unit_controls*"
-SOCKET_PATH = "/run/headunit.sock"
+SOCKET_PATH = "/run/headunit.sock"          # control commands (headunitctl)
+EVENTS_PATH = "/run/headunit-events.sock"   # raw event stream for games
 PROFILES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "profiles.json")
 DEFAULT_PROFILE = "system"
 LONG_PRESS_MS = 2000
@@ -79,6 +85,7 @@ class Daemon:
         self.held = {}          # key code -> asyncio timer handle (auto-release)
         self.down = {}          # button id -> pressed-state info for B1/B2
         self.long_timers = {}   # button id -> asyncio timer handle
+        self.subscribers = set()  # writers of programs reading the raw event stream
 
     # ── profiles ─────────────────────────────────────────────────────────
     def load_profiles(self):
@@ -116,6 +123,9 @@ class Daemon:
         if len(parts) != 2:
             return
         name, arg = parts
+        if name not in ("E1", "E2", "B1", "B2"):
+            return
+        self.publish(line)
         spec = self.profiles[self.current].get(name)
         if not spec:
             return
@@ -123,6 +133,16 @@ class Daemon:
             self.turn(spec, 1 if arg == "+1" else -1)
         elif name.startswith("B") and arg in ("down", "up"):
             self.button(name, spec, arg == "down")
+
+    def publish(self, line):
+        """Send a raw event line to every program subscribed on EVENTS_PATH."""
+        data = (line + "\n").encode()
+        for writer in list(self.subscribers):
+            if writer.transport.is_closing() or writer.transport.get_write_buffer_size() > 65536:
+                self.subscribers.discard(writer)  # gone, or too slow to keep up
+                writer.close()
+                continue
+            writer.write(data)
 
     def turn(self, spec, direction):
         action = spec["action"]
@@ -278,16 +298,30 @@ class Daemon:
         await writer.drain()
         writer.close()
 
-    async def run(self):
-        if os.path.exists(SOCKET_PATH):
-            os.unlink(SOCKET_PATH)
-        server = await asyncio.start_unix_server(self.control_client, SOCKET_PATH)
-        os.chmod(SOCKET_PATH, 0o660)
+    async def events_client(self, reader, writer):
+        self.subscribers.add(writer)
         try:
-            shutil.chown(SOCKET_PATH, group="pi")
+            await reader.read()  # events only flow out; this returns when the client leaves
+        finally:
+            self.subscribers.discard(writer)
+            writer.close()
+
+    @staticmethod
+    async def listen(path, handler):
+        if os.path.exists(path):
+            os.unlink(path)
+        server = await asyncio.start_unix_server(handler, path)
+        os.chmod(path, 0o660)
+        try:
+            shutil.chown(path, group="pi")
         except (LookupError, PermissionError):
             pass
-        async with server:
+        return server
+
+    async def run(self):
+        control = await self.listen(SOCKET_PATH, self.control_client)
+        events = await self.listen(EVENTS_PATH, self.events_client)
+        async with control, events:
             await self.serial_loop()
 
 

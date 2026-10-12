@@ -3,6 +3,7 @@
     "E1": {"action": "volume", "step": 5},
     "B1": {"short": "backlight_toggle", "long": "shutdown"}
   },
+  "raw": {},
   "doom": {
     "E1": {"action": "mouse_x", "scale": 6},
     "E2": {"action": "hold_keys", "plus": "KEY_W", "minus": "KEY_S", "hold_ms": 150},
